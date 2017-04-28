@@ -1,12 +1,6 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
-import { AppRegistry,StyleSheet,Text,View, Navigator, AsyncStorage } from 'react-native';
-import MapView from './Code/iosCode/MapView.js'
+import { AppRegistry,StyleSheet,Text,View, Navigator } from 'react-native';
+import MapViewPins from './Code/iosCode/MapViewPins.js'
 import SignIn from './Code/iosCode/SignIn.js'
 import UserPage from './Code/iosCode/UserPage.js'
 
@@ -20,13 +14,14 @@ const firebaseConfig = {
 };
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
-export default class Navigate extends Component{
+class StraightPoop extends Component {
+
 
   render() {
     return (
       <Navigator
         style={{ flex: 1 }}
-        initialRoute={{ name: 'StraightPoop' }}
+        initialRoute={{ name: 'SignIn' }}
         renderScene={this.renderScene.bind(this)}
       />
     )
@@ -34,23 +29,20 @@ export default class Navigate extends Component{
 
   renderScene(route, navigator) {
     //Loads the main page
-    if (route.name == 'StraightPoop'){
-      return <StraightPoop navigator={navigator} firebaseApp={firebaseApp} />
-    }
 
+
+    if (route.name == 'MapViewPins'){
+      return <MapViewPins navigator={navigator} firebaseApp={firebaseApp} />
+    }
     if (route.name == 'UserPage'){
       return <UserPage navigator={navigator} firebaseApp={firebaseApp} />
     }
-
+    if(route.name == 'SignIn'){
+      return <SignIn navigator={navigator} firebaseApp={firebaseApp} />
+    }
   }
 
-}
-
-AppRegistry.registerComponent('StraightPoop', () => Navigate);
-
-class StraightPoop extends Component {
-
-  componentWillMount(){
+    async componentWillMount(){
     //Check if userData is stored on device else open Login
     AsyncStorage.getItem('userData').then((user_data_json) => {
       let user_data = JSON.parse(user_data_json);
@@ -62,14 +54,6 @@ class StraightPoop extends Component {
     });
   }
 
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <SignIn firebaseApp={firebaseApp} navigator={navigator}/>
-      </View>
-    );
-  }
 }
 
 const styles = StyleSheet.create({
@@ -89,3 +73,6 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
+
+
+AppRegistry.registerComponent('StraightPoop', () => StraightPoop);
