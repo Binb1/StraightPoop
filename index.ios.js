@@ -5,12 +5,10 @@
  */
 
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { AppRegistry,StyleSheet,Text,View } from 'react-native';
+import MapView from './Code/iosCode/MapView.js'
+import SignIn from './Code/iosCode/SignIn.js'
+import UserPage from './Code/iosCode/UserPage.js'
 
 export default class StraightPoop extends Component {
   render() {

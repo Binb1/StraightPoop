@@ -11,6 +11,9 @@ import {
   Text,
   View
 } from 'react-native';
+import MapView from './Code/androidCode/MapView.js'
+import SignIn from './Code/androidCode/SignIn.js'
+import UserPage from './Code/androidCode/UserPage.js'
 
 export default class StraightPoop extends Component {
   render() {
