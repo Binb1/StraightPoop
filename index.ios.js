@@ -14,9 +14,9 @@ import * as firebase from 'firebase';
 
 //Initiaizing firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyDUZjvISVXl1Xl64PaDU2Zi0uRn6jdG9gA",
-  authDomain: "gofu-9c8fb.firebaseio.com",
-  databaseURL: "https://gofu-9c8fb.firebaseio.com/",
+  apiKey: "AIzaSyDiLxHPhf_sMM93ukyBdXQQQTnNx6XstOw",
+  authDomain: "straightpoop-9f9d6.firebaseio.com",
+  databaseURL: "https://straightpoop-9f9d6.firebaseio.com/",
 };
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
