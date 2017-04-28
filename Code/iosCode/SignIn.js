@@ -17,18 +17,16 @@ class SignIn extends Component{
       loading: true
     });
     // Log in and display an alert to tell the user what happened.
-    this.props.firebaseApp.auth().signInWithEmailAndPassword(this.state.email, this.state.password
-    ).then((userData) =>
-      {
-        this.setState({
-          loading: false
-        });
-        AsyncStorage.setItem('userData', JSON.stringify(userData));
-        this.props.navigator.push({
-          name: 'HomeUser'
-        });
-      }
-    ).catch((error) =>
+    this.props.firebaseApp.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((userData) =>
+    {
+      this.setState({
+        loading: false
+      });
+      AsyncStorage.setItem('userData', JSON.stringify(userData));
+      this.props.navigator.push({
+        name: 'HomeUser'
+      });
+    }).catch((error) =>
     {
         this.setState({
           loading: false
@@ -55,8 +53,8 @@ class SignIn extends Component{
   };
 
   _navigateToUserNotLogged(){
-    this.props.navigator.pop({
-      name: "UserNotLoggedIn"
+    this.props.navigator.push({
+      name: "UserPage"
     });
   }
 

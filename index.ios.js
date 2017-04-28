@@ -66,7 +66,7 @@ class StraightPoop extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <SignIn />
+        <SignIn firebaseApp={firebaseApp} navigator={navigator}/>
       </View>
     );
   }
