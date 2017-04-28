@@ -1,37 +1,54 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
-import MapView from './Code/androidCode/MapView.js'
+import { AppRegistry,StyleSheet,Text,View, Navigator } from 'react-native';
+import MapViewPins from './Code/androidCode/MapViewPins.js'
 import SignIn from './Code/androidCode/SignIn.js'
 import UserPage from './Code/androidCode/UserPage.js'
 
-export default class StraightPoop extends Component {
+import * as firebase from 'firebase';
+
+//Initiaizing firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyDUZjvISVXl1Xl64PaDU2Zi0uRn6jdG9gA",
+  authDomain: "gofu-9c8fb.firebaseio.com",
+  databaseURL: "https://gofu-9c8fb.firebaseio.com/",
+};
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+
+class StraightPoop extends Component {
+
+
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
-      </View>
-    );
+      <Navigator
+        style={{ flex: 1 }}
+        initialRoute={{ name: 'MapViewPins' }}
+        renderScene={this.renderScene.bind(this)}
+      />
+    )
   }
+
+  renderScene(route, navigator) {
+    //Loads the main page
+    if (route.name == 'MapViewPins'){
+      return <MapViewPins navigator={navigator} firebaseApp={firebaseApp} />
+    }
+    if (route.name == 'UserPage'){
+      return <UserPage navigator={navigator} firebaseApp={firebaseApp} />
+    }
+  }
+
+    async componentWillMount(){
+    //Check if userData is stored on device else open Login
+    AsyncStorage.getItem('userData').then((user_data_json) => {
+      let user_data = JSON.parse(user_data_json);
+      if(user_data != null){
+        this.props.navigator.push({
+          name: 'UserPage'
+        });
+      }
+    });
+  }
+
 }
 
 const styles = StyleSheet.create({
@@ -39,7 +56,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
   welcome: {
     fontSize: 20,
@@ -53,4 +69,6 @@ const styles = StyleSheet.create({
   },
 });
 
+
 AppRegistry.registerComponent('StraightPoop', () => StraightPoop);
+
