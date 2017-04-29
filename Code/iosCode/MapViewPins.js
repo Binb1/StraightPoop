@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, AsyncStorage, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, AsyncStorage, Image, Animated } from 'react-native';
 import MapView from 'react-native-maps';
 import PopUpViewAdd from './PopUpViewAdd.js'
 
@@ -36,7 +36,8 @@ class MapViewPins extends Component {
         },
       ],
       username: '',
-      email: ''
+      email: '',
+      bottomViewAdd: -200
     }
   }
 
@@ -83,6 +84,7 @@ class MapViewPins extends Component {
   render() {
     console.log('region', this.state.region)
     console.log('userPosition', this.state.userPosition)
+    console.log('test', this.state.bottomViewAdd)
     return (
       <View style={styles.container}>
         <MapView
@@ -103,7 +105,7 @@ class MapViewPins extends Component {
           />
         </MapView>
 
-        <TouchableOpacity onPress={this._navigateToProfile.bind(this)} style={styles.plus}>
+        <TouchableOpacity onPress={() => this.plusPressed()} style={styles.plus}>
           <Image
             style={styles.plusButton}
             source={require('../../Images/plus.png')}
@@ -115,9 +117,41 @@ class MapViewPins extends Component {
             source={require('../../Images/profilePage.png')}
           />
         </TouchableOpacity>
-        <PopUpViewAdd/>
+        <Animated.View style={{
+          flex: 3,
+          height: 200,
+          borderWidth: 3,
+          borderColor: 'white',
+          borderRadius: 10,
+          position: 'absolute',
+          left: 10,
+          right: 10,
+          bottom: this.state.bottomViewAdd,
+          backgroundColor: '#FFA860',
+          shadowColor: '#999999',
+          shadowOffset: {
+            width: 0,
+            height: 3
+          },
+          shadowRadius: 2,
+          shadowOpacity: 0.3
+        }}>
+          <PopUpViewAdd bottomViewAdd={this.state.bottomViewAdd} closePopUpViewAdd={this.closePopUpViewAdd.bind(this)}/>
+        </Animated.View>
       </View>
     )
+  }
+
+  plusPressed() {
+    this.setState({
+      bottomViewAdd: 40
+    })
+  }
+
+  closePopUpViewAdd(){
+    this.setState({
+      bottomViewAdd: -200
+    })
   }
 }
 
@@ -145,7 +179,7 @@ const styles = new StyleSheet.create({
   },
   profile: {
     position: 'absolute',
-    top:40,
+    top: 40,
     right: 20
   },
   plusButton: {
