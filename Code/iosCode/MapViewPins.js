@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, AsyncStorage } from 'react-native';
 import MapView from 'react-native-maps';
 
+var markers = {
+  latlng: { latitude: 37.78825, longitude: -122.4324 }
+}
+
+
 class MapViewPins extends Component {
 
   constructor(props) {
@@ -24,20 +29,29 @@ class MapViewPins extends Component {
     }
   }
 
-  logout(){
-    AsyncStorage.setItem('userData', '');
-    this.props.navigator.push({
-      name: 'SignIn'
-    });
-  }
-
   _navigateToProfile(){
     this.props.navigator.push({
       name: 'UserPage'
     })
+    }
+
+
+  componentDidMount(){
+    //Getting user position
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        var userPosition = JSON.stringify(position);
+        this.setState({userPosition});
+      },
+      (error) => alert(error.message),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
   }
 
+
+  // onRegionChange={this.onRegionChange()}>
   render() {
+    console.log(this.state.userPosition)
     return (
       <View style={styles.container}>
         <MapView
@@ -48,14 +62,18 @@ class MapViewPins extends Component {
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }} />
-          <TouchableOpacity onPress={this.logout.bind(this)} style={styles.logout}>
-            <Text>Log Out</Text>
-          </TouchableOpacity>
           <TouchableOpacity onPress={this._navigateToProfile.bind(this)} style={styles.profile}>
             <Text>Profile</Text>
           </TouchableOpacity>
       </View>
     )
+  }
+
+  //Function to auto update the region on the map
+  onRegionChange(region) {
+    this.setState({
+      region
+    });
   }
 }
 

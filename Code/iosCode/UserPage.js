@@ -56,7 +56,6 @@ class UserPage extends Component{
           <TextInput
             placeholder={this.state.email == '' ? "Email" : this.state.email }
             style={styles.inputBox}
-            editable='false'
           />
           <TouchableOpacity onPress={this.update.bind(this)}>
             <Text>Update account</Text>
