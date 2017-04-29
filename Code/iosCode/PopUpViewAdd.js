@@ -6,6 +6,7 @@ import MapView from 'react-native-maps';
 class PopUpViewAdd extends Component {
 
   constructor(props) {
+
     super(props);
     this.state = {
       nameOfThePlace: '',
@@ -13,6 +14,7 @@ class PopUpViewAdd extends Component {
       thumsDown: require('../../Images/dislike-thumb-white.png'),
       thumbsChosen: false,
       thumbsChoice: '',
+      bottomViewAdd: this.props.bottomViewAdd
     }
   }
 
@@ -31,7 +33,7 @@ class PopUpViewAdd extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={{ flex: 3 }}>
         <TextInput
           style={styles.textInput}
           placeholder="Enter the name of the place"
@@ -52,13 +54,17 @@ class PopUpViewAdd extends Component {
           </TouchableHighlight>
         </View>
         <View style={styles.buttonSendContainer}>
+          <TouchableHighlight style={styles.buttonSendbox} onPress={() => this.props.closePopUpViewAdd()}>
+            <Text style={{ color: '#FFA860', fontSize: 20 }}>
+              Close
+            </Text>
+          </TouchableHighlight>
           <TouchableHighlight style={styles.buttonSendbox} onPress={() => this.sendPin()}>
             <Text style={{ color: '#FFA860', fontSize: 20 }}>
               Send!
             </Text>
           </TouchableHighlight>
         </View>
-
       </View>
     )
   }
@@ -88,47 +94,41 @@ class PopUpViewAdd extends Component {
         'Error',
         'Choose thumbs down or thumbs up for those restrooms!',
         [
-          { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },         
+          { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
         ],
         { cancelable: false }
       )
     }
     //Checking if a name is good
-    if (this.state.nameOfThePlace == ''){
+    if (this.state.nameOfThePlace == '') {
       Alert.alert(
         'Error',
         'Enter the name of the place !',
         [
-          { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },         
+          { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
         ],
         { cancelable: false }
       )
     }
     //Sending the item to the database
+    this.props.closePopUpViewAdd()
 
+    //Reseting the field
+    this.resetField()
+  }
+
+  resetField() {
+    this.setState({
+      thumbsUp: require('../../Images/thumbs-up-white.png'),
+      thumsDown: require('../../Images/dislike-thumb-white.png'),
+      thumbsChosen: false,
+      thumbsChoice: '',
+      nameOfThePlace: ''
+    })
   }
 }
 
 const styles = new StyleSheet.create({
-  container: {
-    flex: 3,
-    height: 200,
-    borderWidth: 3,
-    borderColor: 'white',
-    borderRadius: 10,
-    position: 'absolute',
-    left: 10,
-    right: 10,
-    bottom: 40,
-    backgroundColor: '#FFA860',
-    shadowColor: '#999999',
-    shadowOffset: {
-      width: 0,
-      height: 3
-    },
-    shadowRadius: 2,
-    shadowOpacity: 0.3
-  },
   textInput: {
     flex: 0.8,
     margin: 5,
@@ -173,6 +173,8 @@ const styles = new StyleSheet.create({
   },
   buttonSendContainer: {
     flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     alignItems: 'center'
   },
   buttonSendbox: {
@@ -180,9 +182,10 @@ const styles = new StyleSheet.create({
     backgroundColor: 'white',
     marginTop: 15,
     marginBottom: 5,
+    marginLeft: 10,
+    marginRight: 10,
     width: Dimensions.get('window').width / 4,
     borderRadius: 3,
-    justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#999999',
     shadowOffset: {
