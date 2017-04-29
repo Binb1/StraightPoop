@@ -46,17 +46,6 @@ class StraightPoop extends Component {
     }
   }
 
-    async componentWillMount(){
-    //Check if userData is stored on device else open Login
-    AsyncStorage.getItem('userData').then((user_data_json) => {
-      let user_data = JSON.parse(user_data_json);
-      if(user_data != null){
-        this.props.navigator.push({
-          name: 'UserPage'
-        });
-      }
-    });
-  }
 
 }
 
