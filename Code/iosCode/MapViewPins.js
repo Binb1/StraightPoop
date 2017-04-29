@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, AsyncStorage } from 'react-native';
 import MapView from 'react-native-maps';
 
 var markers = {
@@ -33,12 +33,31 @@ class MapViewPins extends Component {
             longitude: -122.4324
           },
         },
-      ]
+      ],
+      username: '',
+      email: ''
     }
   }
 
+  _navigateToProfile(){
+    this.props.navigator.push({
+      name: 'UserPage'
+    })
+    }
+
 
   componentDidMount(){
+    //Getting user infos
+    var user = this.props.firebaseApp.auth().currentUser;
+    var name, email, photoUrl, uid;
+
+    if (user != null) {
+      this.setState({
+        username: user.displayName,
+        email: user.email,
+      });
+    }
+
     //Getting user position
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -59,7 +78,6 @@ class MapViewPins extends Component {
       region
     });
   }
-
 
   render() {
     console.log('region', this.state.region)
@@ -82,7 +100,11 @@ class MapViewPins extends Component {
           <MapView.Marker
             coordinate={this.state.userPosition}
           />
-        </MapView>
+        </MapView>  
+        
+          <TouchableOpacity onPress={this._navigateToProfile.bind(this)} style={styles.profile}>
+            <Text>Profile</Text>
+          </TouchableOpacity>
       </View>
     )
   }
@@ -104,6 +126,15 @@ const styles = new StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+  },
+  logout: {
+    backgroundColor: '#FF0000',
+    height: 40,
+    borderRadius: 4,
+    right:0,
+  },
+  profile: {
+
   }
 })
 

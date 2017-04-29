@@ -28,7 +28,7 @@ class SignUp extends Component{
 
   _navigateToUserNotLogged(){
     this.props.navigator.pop({
-      name: "SignIn"
+      name: "MapViewPins"
     });
   }
 
