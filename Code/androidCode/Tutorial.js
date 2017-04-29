@@ -1,7 +1,20 @@
 import React, { Component } from "react";
-import { Image, View, Text, StyleSheet, StatusBar } from "react-native";
+import {
+  TouchableHighlight,
+  Image,
+  View,
+  Text,
+  StyleSheet,
+  StatusBar,
+  Dimensions
+} from "react-native";
 
 class Tutorial extends Component {
+  GoToMain() {
+    this.props.navigator.push({
+      name: "MapViewPoints"
+    });
+  }
   render() {
     return (
       <View style={style.container}>
@@ -21,7 +34,10 @@ class Tutorial extends Component {
             </View>
           </View>
           <View style={style.line}>
-            <Image style={style.pin} source={require("../../Markers/RedMoney.png")}>
+            <Image
+              style={style.pin}
+              source={require("../../Markers/RedMoney.png")}
+            >
               <Image
                 style={style.pin2}
                 source={require("../../Markers/GreenMoney.png")}
@@ -29,12 +45,15 @@ class Tutorial extends Component {
             </Image>
             <View style={style.textbox}>
               <Text style={style.text}>
-                You might have to buy something to access some.
+                You might have to buy something to access stores' restrooms.
               </Text>
             </View>
           </View>
           <View style={style.line}>
-            <Image style={style.pin} source={require("../../Markers/YellowMoney.png")}>
+            <Image
+              style={style.pin}
+              source={require("../../Markers/YellowMoney.png")}
+            >
               <Image
                 style={style.pin2}
                 source={require("../../Markers/Yellow.png")}
@@ -45,6 +64,13 @@ class Tutorial extends Component {
                 Look out for your best option!
               </Text>
             </View>
+          </View>
+          <View style={{height:75,marginBottom:50}}
+          activeOpacity={0.5}>
+          <TouchableHighlight style = {style.th}
+            onPress={this.GoToMain.bind(this)}>
+            <Text style={style.button}>Got it!</Text>
+          </TouchableHighlight>
           </View>
         </View>
       </View>
@@ -57,17 +83,29 @@ const style = new StyleSheet.create({
     backgroundColor: "#FFA860",
     flex: 1
   },
+  th: {
+    flex: 1,
+    backgroundColor: '#FFA860',
+    width: Dimensions.get('window').width / 4,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
+  button: {
+    fontSize: 25,
+    textAlign: 'center',
+  },
   text: {
     fontSize: 24,
-    fontWeight: 'bold'
+    fontWeight: "bold"
   },
   textbox: {
-    alignItems:'center',
+    alignItems: "center",
     flex: 1,
     flexWrap: "wrap"
   },
   pin: {
-    marginLeft:30,
+    marginLeft: 30,
     width: 75,
     height: 75
   },
