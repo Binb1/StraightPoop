@@ -96,21 +96,10 @@ class MapViewPins extends Component {
           <TouchableOpacity onPress={this._navigateToProfile.bind(this)} style={styles.profile}>
             <Text>Profile</Text>
           </TouchableOpacity>
-          initialRegion={this.state.region}
-          region={this.state.userPosition}
-          onRegionChange={this.onRegionChange.bind(this)}>
-
-          {this.state.markers.map(marker => (
-            <MapView.Marker
-              coordinate={marker.latlng}
-              title={marker.title}
-              key={marker.key}
-            />
-          ))}
           <MapView.Marker
             coordinate={this.state.userPosition}
           />
-          <TouchableOpacity onPress={this._navigateToProfile.bind(this)} style={styles.profile}>
+          <TouchableOpacity onPress={this.savePin.bind(this)} style={styles.profile}>
             <Image
               style={{width: 70, height: 70}}
               source={require('../../Images/plus.png')}
@@ -119,6 +108,11 @@ class MapViewPins extends Component {
       </View>
     )
   }
+
+  savePin(){
+
+  }
+
 }
 
 const styles = new StyleSheet.create({
