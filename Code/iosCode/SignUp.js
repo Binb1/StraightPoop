@@ -15,6 +15,18 @@ class SignUp extends Component{
   render(){
     return(
       <View style={styles.container}>
+        <View style={styles.top}>
+          <TouchableOpacity onPress={this._navigateBack.bind(this)}>
+            <Image
+              style={styles.arrow}
+              source={require('../../Images/left-arrow.png')}
+            />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.middleBox}>
+          <Text style={styles.registerText}>Please register to access thousands of restrooms around the world!</Text>
+        </View>
+        <View style={styles.body}>
           <Text style={styles.topBox}>Email:</Text>
           <TextInput style={styles.inputs} placeholder="Email" onChangeText={(text) => this.setState({email: text})}/>
           <Text style={styles.topBox}>Password:</Text>
@@ -22,9 +34,14 @@ class SignUp extends Component{
           <TouchableOpacity style={styles.signInButton} onPress={this.signUp.bind(this)}>
             <Text style={styles.textSignIn}>Sign Up</Text>
           </TouchableOpacity>
+         </View>
       </View>
     );
   };
+
+  _navigateBack(){
+    this.props.navigator.pop();
+  }
 
   _navigateToUserNotLogged(){
     this.props.navigator.pop({
@@ -70,14 +87,40 @@ const styles = StyleSheet.create({
     flex: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F58E38',
+    backgroundColor: '#FFA860',
     minWidth: 375
   },
-  logo: {
-    flex: 3,
-    paddingTop: 20,
+  top:{
+    flex: 1,
+    marginTop: 25,
+    marginRight: 300,
+  },
+  arrow: {
+    width: 30,
+    height: 30,
+  },
+  body: {
+    flex: 6,
     justifyContent: 'center',
-    minWidth: 375,
+    alignItems: 'center',
+    width: 320,
+    height: 80,
+    marginBottom: 140,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+  },
+  middleBox:{
+    flex: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  registerText:{
+    color: 'white',
+    marginRight: 15,
+    marginLeft: 15,
+    fontWeight: 'bold',
+    fontSize: 25,
+    textAlign: 'center',
   },
   backContainer:{
     flex: 1,
@@ -102,32 +145,31 @@ const styles = StyleSheet.create({
   },
   inputs: {
     minHeight: 40,
-    backgroundColor: "#FFFFFF",
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 20,
-    marginRight: 20,
-    padding: 10,
-    borderRadius: 4,
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    backgroundColor: "#FFA860",
+    margin: 12,
+    padding: 5,
+    borderRadius: 5,
   },
   signInButton:{
     borderWidth: 1,
-    borderColor: "#FFFFFF",
-    backgroundColor: '#FFFFFF',
+    borderColor: '#FFA860',
+    backgroundColor: '#FFA860',
     minWidth: 200,
     minHeight: 40,
-    borderRadius: 4,
+    borderRadius: 5,
     marginTop: 20,
     justifyContent: 'center',
     alignItems: 'center'
   },
   textSignIn: {
-    color: "#F58E38",
+    color: "white",
     fontSize: 20,
     fontWeight: 'bold',
   },
   topBox: {
-    color: '#FFFFFF',
+    color: '#FFA860',
     fontSize: 20,
     fontWeight: 'bold',
   },

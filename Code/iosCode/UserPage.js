@@ -54,7 +54,6 @@ class UserPage extends Component{
         </View>
         <View style={styles.body}>
           <Text style={styles.description}>Profile</Text>
-          <Text>{this.state.email}</Text>
           <Text style={styles.mail}>Username</Text>
           <TextInput
             placeholder={this.state.name == '' ? 'Username' : this.state.username }
@@ -65,6 +64,7 @@ class UserPage extends Component{
           <TextInput
             placeholder={this.state.email == '' ? "Email" : this.state.email }
             style={styles.inputBox}
+            editable={false}
           />
           <TouchableOpacity onPress={this.update.bind(this)}>
             <Text style={{marginBottom: 5}}>Update account</Text>
