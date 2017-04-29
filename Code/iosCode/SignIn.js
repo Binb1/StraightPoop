@@ -17,7 +17,7 @@ class SignIn extends Component{
     AsyncStorage.getItem('userData').then((user_data_json) => {
       let user_data = JSON.parse(user_data_json);
       console.log(user_data);
-      if(user_data != ''){
+      if(user_data != null){
         this.props.navigator.push({
           name: 'MapViewPins'
         });
