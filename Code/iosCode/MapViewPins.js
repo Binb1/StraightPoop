@@ -110,7 +110,11 @@ class MapViewPins extends Component {
   }
 
   savePin(){
-
+    this.props.geofire.set('KEY', [37.785326, -122.405696]).then(function() {
+      console.log("Provided key has been added to GeoFire");
+    }, function(error) {
+      console.log("Error: " + error);
+    });
   }
 
 }
@@ -138,7 +142,7 @@ const styles = new StyleSheet.create({
     right: 20
   },
   plusButton: {
-    width: 70, 
+    width: 70,
     height: 70,
     shadowColor: '#999999',
     shadowOffset: {

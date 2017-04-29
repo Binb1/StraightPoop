@@ -33,7 +33,7 @@ class StraightPoop extends Component {
 
 
     if (route.name == 'MapViewPins'){
-      return <MapViewPins navigator={navigator} firebaseApp={firebaseApp} />
+      return <MapViewPins navigator={navigator} firebaseApp={firebaseApp}/>
     }
     if (route.name == 'UserPage'){
       return <UserPage navigator={navigator} firebaseApp={firebaseApp} />
