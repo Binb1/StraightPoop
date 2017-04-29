@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { AppRegistry,StyleSheet,Text,View, Navigator } from 'react-native';
+import { AppRegistry,StyleSheet,Text,View, Navigator, AsyncStorage } from 'react-native';
 import MapViewPins from './Code/iosCode/MapViewPins.js'
 import SignIn from './Code/iosCode/SignIn.js'
 import UserPage from './Code/iosCode/UserPage.js'
+import SignUp from './Code/iosCode/SignUp.js'
 
 import * as firebase from 'firebase';
 
@@ -39,6 +40,9 @@ class StraightPoop extends Component {
     }
     if(route.name == 'SignIn'){
       return <SignIn navigator={navigator} firebaseApp={firebaseApp} />
+    }
+    if(route.name == 'SignUp'){
+      return <SignUp navigator={navigator} firebaseApp={firebaseApp}/>
     }
   }
 

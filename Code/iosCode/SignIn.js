@@ -45,16 +45,16 @@ class SignIn extends Component{
         <TouchableOpacity style={styles.signInButton} onPress={this.signIn.bind(this)}>
           <Text style={styles.textSignIn}>Sign In</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={this._navigateToSignUp.bind(this)}>
           <Text>Sign Up</Text>
         </TouchableOpacity>
       </View>
     );
   };
 
-  _navigateToUserNotLogged(){
+  _navigateToSignUp(){
     this.props.navigator.push({
-      name: "UserPage"
+      name: "SignUp"
     });
   }
 
