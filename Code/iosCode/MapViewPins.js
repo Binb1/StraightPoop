@@ -77,6 +77,7 @@ class MapViewPins extends Component {
     )
   }
 
+  //Function to auto update the region on the map
   onRegionChange(region) {
     this.setState({
       region
