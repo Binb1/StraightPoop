@@ -110,7 +110,6 @@ class MapViewPins extends Component {
           <MapView.Marker
             coordinate={this.state.userPosition}
           />
-        </MapView>  
           <TouchableOpacity onPress={this._navigateToProfile.bind(this)} style={styles.profile}>
             <Text>Profile</Text>
           </TouchableOpacity>
