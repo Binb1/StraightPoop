@@ -54,7 +54,7 @@ class SignIn extends Component{
         <View style={styles.welcome}>
         <Image
             style={styles.logo}
-            source={require('./Images/toilet.png')}
+            source={require('../../Images/toilet.png')}
           />
           <Text style={styles.title}>Welcome to Straight Poop!</Text>
         </View>
