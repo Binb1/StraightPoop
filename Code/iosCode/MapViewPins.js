@@ -12,29 +12,45 @@ class MapViewPins extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      userPosition: 'ea',
       region: {
         latitude: 37.78825,
         longitude: -122.4324,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       },
-      markers: [{
-        key: 1,
-        title: 'hello',
-        latlng: {
-          latitude: 37.78825,
-          longitude: -122.4324
+      markers: [
+        {
+          key: 1,
+          title: 'hello',
+          latlng: {
+            latitude: 37.78825,
+            longitude: -122.4324
+          },
         },
-      },
-      {
-        key: 2,
-        title: 'hello',
-        latlng: {
-          latitude: 37.78827,
-          longitude: -122.4226
-        },
-      }]
+        {
+          key: 2,
+          title: 'hello',
+          latlng: {
+            latitude: 37.78827,
+            longitude: -122.4226
+          },
+        }
+      ]
     }
+  }
+
+
+  componentDidMount(){
+    //Getting user position
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        var userPosition = JSON.stringify(position);
+        this.setState({userPosition});
+      },
+      (error) => alert(error.message),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
   }
 
 
@@ -42,6 +58,7 @@ class MapViewPins extends Component {
 
 
   render() {
+    console.log(this.state.userPosition)
     return (
       <View style={styles.container}>
         <MapView
@@ -53,10 +70,8 @@ class MapViewPins extends Component {
               coordinate={marker.latlng}
               title={marker.title}
               key={marker.key}
-            //  description={marker.description}
             />
           ))}
-
         </MapView>
       </View>
     )
