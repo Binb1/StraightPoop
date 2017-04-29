@@ -7,6 +7,7 @@ import SignUp from './Code/iosCode/SignUp.js'
 import Tutorial from './Code/iosCode/Tutorial.js'
 
 import * as firebase from 'firebase';
+const geofire = require('geofire');
 
 //Initiaizing firebase
 const firebaseConfig = {
@@ -15,10 +16,9 @@ const firebaseConfig = {
   databaseURL: "https://straightpoop-9f9d6.firebaseio.com/",
 };
 const firebaseApp = firebase.initializeApp(firebaseConfig);
+const geofireRef = new geofire(firebaseApp.database().ref())
 
 class StraightPoop extends Component {
-
-
   render() {
     return (
       <Navigator
@@ -35,7 +35,7 @@ class StraightPoop extends Component {
       return <Tutorial navigator={navigator} firebaseApp={firebaseApp} />
     }
     if (route.name == 'MapViewPins'){
-      return <MapViewPins navigator={navigator} firebaseApp={firebaseApp} />
+      return <MapViewPins navigator={navigator} firebaseApp={firebaseApp} geofire={geofireRef}/>
     }
     if (route.name == 'UserPage'){
       return <UserPage navigator={navigator} firebaseApp={firebaseApp} />
