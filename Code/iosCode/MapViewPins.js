@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, AsyncStorage, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, AsyncStorage, Image, Animated } from 'react-native';
 import MapView from 'react-native-maps';
 import PopUpViewAdd from './PopUpViewAdd.js'
 
-var markers = {
-  latlng: { latitude: 37.78825, longitude: -122.4324 }
-}
-
+var northPole = {
+        latitude: -90,
+        longitude: -180,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      }
 
 class MapViewPins extends Component {
 
@@ -36,7 +38,18 @@ class MapViewPins extends Component {
         },
       ],
       username: '',
-      email: ''
+      email: '',
+      bottomViewAdd: -200,
+      markerPointerAdd: {
+        latitude: -90,
+        longitude: -180,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      },
+      markerPointerAddValue: {
+
+      },
+      addingPin: false
     }
   }
 
@@ -74,7 +87,8 @@ class MapViewPins extends Component {
       (position) => {
         console.log('In')
         this.setState({
-          userPosition: { latitude: position.coords.latitude, longitude: position.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }
+          userPosition: { latitude: position.coords.latitude, longitude: position.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 },
+          region: { latitude: position.coords.latitude, longitude: position.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 },
         });
       },
       (error) => alert(error.message),
@@ -86,8 +100,13 @@ class MapViewPins extends Component {
   //Function to auto update the region on the map
   onRegionChange(region) {
     this.setState({
-      region
+      region,
     });
+    if (this.state.addingPin == true){
+      this.setState({
+        markerPointerAdd: region
+      })
+    }
   }
 
   render() {
@@ -97,21 +116,27 @@ class MapViewPins extends Component {
       <View style={styles.container}>
         <MapView
           style={styles.map}
-          initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }} >
-          </MapView>
-          <TouchableOpacity onPress={this._navigateToProfile.bind(this)} style={styles.profile}>
-            <Text>Profile</Text>
-          </TouchableOpacity>
+          initialRegion={this.state.region}
+          region={this.state.region}
+          onRegionChange={this.onRegionChange.bind(this)}>
+
+          {this.state.markers.map(marker => (
+            <MapView.Marker
+              coordinate={marker.latlng}
+              title={marker.title}
+              key={marker.key}
+            />
+          ))}
           <MapView.Marker
             coordinate={this.state.userPosition}
           />
+          <MapView.Marker
+            coordinate={this.state.markerPointerAdd}
+            pinColor={'blue'}
+          />
+        </MapView>
 
-        <TouchableOpacity onPress={this._navigateToProfile.bind(this)} style={styles.plus}>
+        <TouchableOpacity onPress={() => this.plusPressed()} style={styles.plus}>
           <Image
             style={styles.plusButton}
             source={require('../../Images/plus.png')}
@@ -123,11 +148,47 @@ class MapViewPins extends Component {
             source={require('../../Images/profilePage.png')}
           />
         </TouchableOpacity>
-        <PopUpViewAdd geofire={this.props.geofire} firebaseApp={this.props.firebaseApp}/>
+        <Animated.View style={{
+          flex: 3,
+          height: 200,
+          borderWidth: 3,
+          borderColor: 'white',
+          borderRadius: 10,
+          position: 'absolute',
+          left: 10,
+          right: 10,
+          bottom: this.state.bottomViewAdd,
+          backgroundColor: '#FFA860',
+          shadowColor: '#999999',
+          shadowOffset: {
+            width: 0,
+            height: 3
+          },
+          shadowRadius: 2,
+          shadowOpacity: 0.3
+        }}>
+          <PopUpViewAdd bottomViewAdd={this.state.bottomViewAdd} closePopUpViewAdd={this.closePopUpViewAdd.bind(this) } firebaseApp={this.props.firebaseApp} />
+        </Animated.View>
       </View>
     )
   }
 
+  plusPressed() {
+    this.setState({
+      bottomViewAdd: 40,
+      addingPin: true,
+      markerPointerAdd: this.state.userPosition
+    })
+  }
+
+  closePopUpViewAdd(){
+    this.setState({
+      bottomViewAdd: -200,
+      addingPin: false,
+      markerPointerAddValue: this.state.markerPointerAddValue,
+      markerPointerAdd: northPole
+    })
+  }
 }
 
 const styles = new StyleSheet.create({
@@ -154,7 +215,7 @@ const styles = new StyleSheet.create({
   },
   profile: {
     position: 'absolute',
-    top:40,
+    top: 40,
     right: 20
   },
   plusButton: {
