@@ -5,39 +5,46 @@ class Tutorial extends Component {
   render() {
     return (
       <View style={style.container}>
-        <StatusBar translucent backgroundColor="rgba(255,255,255,0)"/>
+        <StatusBar translucent backgroundColor="rgba(255,255,255,0)" />
         <View style={style.tutorial}>
           <View style={style.line}>
-            <Image style={style.pin}
-              source={require("../../Markers/Red.png")}>
+            <Image style={style.pin} source={require("../../Markers/Red.png")}>
               <Image
                 style={style.pin2}
                 source={require("../../Markers/Green.png")}
               />
             </Image>
-            <Text style={style.text}>Find the best restrooms around you!</Text>
+            <View style={style.textbox}>
+              <Text style={style.text}>
+                Find the best restrooms around you!
+              </Text>
+            </View>
           </View>
           <View style={style.line}>
-            <Image
-              style={style.pin}
-              source={require("../../Markers/RedMoney.png")}>
+            <Image style={style.pin} source={require("../../Markers/RedMoney.png")}>
               <Image
                 style={style.pin2}
                 source={require("../../Markers/GreenMoney.png")}
               />
             </Image>
-            <Text style={style.text}>Some have restricted access.</Text>
+            <View style={style.textbox}>
+              <Text style={style.text}>
+                You might have to buy something to access some.
+              </Text>
+            </View>
           </View>
           <View style={style.line}>
-            <Image
-              style={style.pin}
-              source={require("../../Markers/YellowMoney.png")}>
+            <Image style={style.pin} source={require("../../Markers/YellowMoney.png")}>
               <Image
                 style={style.pin2}
                 source={require("../../Markers/Yellow.png")}
               />
             </Image>
-            <Text style={style.text}>Look out for your best option!</Text>
+            <View style={style.textbox}>
+              <Text style={style.text}>
+                Look out for your best option!
+              </Text>
+            </View>
           </View>
         </View>
       </View>
@@ -51,10 +58,16 @@ const style = new StyleSheet.create({
     flex: 1
   },
   text: {
-    marginTop: 20,
-    fontSize: 16,
+    fontSize: 24,
+    fontWeight: 'bold'
+  },
+  textbox: {
+    alignItems:'center',
+    flex: 1,
+    flexWrap: "wrap"
   },
   pin: {
+    marginLeft:30,
     width: 75,
     height: 75
   },
@@ -74,7 +87,7 @@ const style = new StyleSheet.create({
     flex: 1,
     borderRadius: 10,
     marginTop: 25,
-    marginBottom: 20,
+    marginBottom: 20
   }
 });
 
