@@ -128,7 +128,7 @@ const styles = new StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: '#FFA860'
+    backgroundColor: '#F58E38'
   },
   map: {
     borderRadius: 10,
