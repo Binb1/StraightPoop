@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, AsyncStorage } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, AsyncStorage, Image } from 'react-native';
 import MapView from 'react-native-maps';
 
 var markers = {
@@ -103,7 +103,10 @@ class MapViewPins extends Component {
         </MapView>  
         
           <TouchableOpacity onPress={this._navigateToProfile.bind(this)} style={styles.profile}>
-            <Text>Profile</Text>
+            <Image
+              style={styles.plusButton}
+              source={require('../../Images/plus.png')}
+            />
           </TouchableOpacity>
       </View>
     )
@@ -117,24 +120,31 @@ const styles = new StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    backgroundColor: '#FFA860'
   },
   map: {
+    borderRadius: 10,
     position: 'absolute',
-    top: 0,
+    top: 20,
     left: 0,
     right: 0,
-    bottom: 0,
-  },
-  logout: {
-    backgroundColor: '#FF0000',
-    height: 40,
-    borderRadius: 4,
-    right:0,
+    bottom: 20,
   },
   profile: {
-
+    position: 'absolute',
+    bottom: 40,
+    right: 20
+  },
+  plusButton: {
+    width: 70, 
+    height: 70,
+    shadowColor: '#999999',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowRadius: 2,
+    shadowOpacity: 1.0
   }
 })
 
