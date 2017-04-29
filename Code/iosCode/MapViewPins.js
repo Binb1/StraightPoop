@@ -101,7 +101,7 @@ class MapViewPins extends Component {
           />
           <TouchableOpacity onPress={this.savePin.bind(this)} style={styles.profile}>
             <Image
-              style={{width: 70, height: 70}}
+              style={styles.plusButton}
               source={require('../../Images/plus.png')}
             />
           </TouchableOpacity>
@@ -136,6 +136,17 @@ const styles = new StyleSheet.create({
     position: 'absolute',
     bottom: 40,
     right: 20
+  },
+  plusButton: {
+    width: 70, 
+    height: 70,
+    shadowColor: '#999999',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowRadius: 2,
+    shadowOpacity: 1.0
   }
 })
 
