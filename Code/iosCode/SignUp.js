@@ -15,7 +15,6 @@ class SignUp extends Component{
   render(){
     return(
       <View style={styles.container}>
-        <View style={styles.loginButtons}>
           <Text style={styles.topBox}>Email:</Text>
           <TextInput style={styles.inputs} placeholder="Email" onChangeText={(text) => this.setState({email: text})}/>
           <Text style={styles.topBox}>Password:</Text>
@@ -23,7 +22,6 @@ class SignUp extends Component{
           <TouchableOpacity style={styles.signInButton} onPress={this.signUp.bind(this)}>
             <Text style={styles.textSignIn}>Sign Up</Text>
           </TouchableOpacity>
-        </View>
       </View>
     );
   };
@@ -72,7 +70,7 @@ const styles = StyleSheet.create({
     flex: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#E1721B',
+    backgroundColor: '#F58E38',
     minWidth: 375
   },
   logo: {
@@ -97,9 +95,6 @@ const styles = StyleSheet.create({
     height: 30,
     tintColor: '#FFFFFF',
   },
-  loginButtons:{
-    flex: 7,
-  },
   iconLogo:{
     color: '#FFFFFF',
     fontSize: 40,
@@ -110,6 +105,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     marginTop: 10,
     marginBottom: 10,
+    marginLeft: 20,
+    marginRight: 20,
     padding: 10,
     borderRadius: 4,
   },
@@ -117,20 +114,22 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#FFFFFF",
     backgroundColor: '#FFFFFF',
-    minWidth: 300,
-    minHeight: 50,
+    minWidth: 200,
+    minHeight: 40,
     borderRadius: 4,
     marginTop: 20,
     justifyContent: 'center',
     alignItems: 'center'
   },
   textSignIn: {
-    color: "#E1721B",
+    color: "#F58E38",
     fontSize: 20,
+    fontWeight: 'bold',
   },
   topBox: {
     color: '#FFFFFF',
-    fontSize: 17,
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   titleTopBox:{
     color: '#FFFFFF',
