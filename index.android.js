@@ -3,6 +3,7 @@ import { AppRegistry,StyleSheet,Text,View, Navigator } from 'react-native';
 import MapViewPins from './Code/androidCode/MapViewPins.js'
 import SignIn from './Code/androidCode/SignIn.js'
 import UserPage from './Code/androidCode/UserPage.js'
+import Tutorial from './Code/androidCode/Tutorial.js'
 
 import * as firebase from 'firebase';
 
@@ -16,12 +17,11 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 class StraightPoop extends Component {
 
-
   render() {
     return (
       <Navigator
         style={{ flex: 1 }}
-        initialRoute={{ name: 'MapViewPins' }}
+        initialRoute={{ name: 'Tutorial' }}
         renderScene={this.renderScene.bind(this)}
       />
     )
@@ -35,20 +35,10 @@ class StraightPoop extends Component {
     if (route.name == 'UserPage'){
       return <UserPage navigator={navigator} firebaseApp={firebaseApp} />
     }
+    if (route.name == 'Tutorial'){
+      return <Tutorial navigator={navigator} firebaseApp={firebaseApp} />
+    }
   }
-
-    async componentWillMount(){
-    //Check if userData is stored on device else open Login
-    AsyncStorage.getItem('userData').then((user_data_json) => {
-      let user_data = JSON.parse(user_data_json);
-      if(user_data != null){
-        this.props.navigator.push({
-          name: 'UserPage'
-        });
-      }
-    });
-  }
-
 }
 
 const styles = StyleSheet.create({
