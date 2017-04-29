@@ -36,9 +36,9 @@ class SignIn extends Component{
         loading: false
       });
       AsyncStorage.setItem('userData', JSON.stringify(userData));
-     /* this.props.navigator.push({
+      this.props.navigator.push({
         name: 'MapViewPins'
-      });*/
+      });
     }).catch((error) =>
     {
         this.setState({
@@ -52,6 +52,10 @@ class SignIn extends Component{
     return(
       <View style={styles.container}>
         <View style={styles.welcome}>
+        <Image
+            style={styles.logo}
+            source={require('./Images/toilet.png')}
+          />
           <Text style={styles.title}>Welcome to Straight Poop!</Text>
         </View>
         <Text style={styles.topBox}>Email:</Text>
@@ -82,17 +86,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F58E38',
-    minWidth: 375
+    minWidth: 375,
   },
   welcome:{
     justifyContent: 'center',
+    alignItems: 'center',
     minWidth: 30,
   },
   title:{
-    marginBottom: 70,
+    marginBottom: 40,
     color: '#FFFFFF',
     fontSize: 22,
     fontWeight: 'bold',
+  },
+  logo:{
+    marginTop: 10,
+    marginBottom:30,
+    marginLeft: 125,
+    marginRight:125,
+    height: 100,
+    width: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   iconLogo:{
     color: '#FFFFFF',
