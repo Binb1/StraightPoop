@@ -61,7 +61,11 @@ class MapViewPins extends Component {
             longitude: -122.4324,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
-          }} />
+          }} >
+          </MapView>
+          <TouchableOpacity onPress={this._navigateToProfile.bind(this)} style={styles.profile}>
+            <Text>Profile</Text>
+          </TouchableOpacity>
           <TouchableOpacity onPress={this._navigateToProfile.bind(this)} style={styles.profile}>
             <Text>Profile</Text>
           </TouchableOpacity>
