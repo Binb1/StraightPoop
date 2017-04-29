@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     flex: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F58E38',
+    backgroundColor: '#FFA860',
     minWidth: 375,
   },
   welcome:{
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   textSignIn: {
-    color: "#F58E38",
+    color: "#FFA860",
     fontSize: 20,
     fontWeight: 'bold',
   },

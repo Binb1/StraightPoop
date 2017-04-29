@@ -59,6 +59,16 @@ class MapViewPins extends Component {
       });
     }
 
+    var geoQuery = this.props.geofire.query({
+      center: [39.78839, -129.4320],
+      radius: 3.5
+    });
+
+    // For every key which matches our GeoQuery...
+    geoQuery.on("key_entered", function(key, location, distance) {
+      console.log(key + " entered query at " + location + " (" + distance + " km from center)");
+    });
+
     //Getting user position
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -127,7 +137,7 @@ const styles = new StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: '#FFA860'
+    backgroundColor: '#F58E38'
   },
   map: {
     borderRadius: 10,

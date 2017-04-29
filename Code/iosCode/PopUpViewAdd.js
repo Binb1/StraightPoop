@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, AsyncStorage, Image, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, AsyncStorage, Image, TextInput, Dimensions, TouchableHighlight, Alert } from 'react-native';
 import MapView from 'react-native-maps';
 
 class PopUpViewAdd extends Component {
@@ -10,7 +10,9 @@ class PopUpViewAdd extends Component {
       email: '',
       nameOfThePlace: '',
       thumbsUp: require('../../Images/thumbs-up-white.png'),
-      thumsDown: require('../../Images/dislike-thumb-white.png')
+      thumsDown: require('../../Images/dislike-thumb-white.png'),
+      thumbsChosen: false,
+      thumbsChoice: '',
     }
   }
 
@@ -41,40 +43,91 @@ class PopUpViewAdd extends Component {
       <View style={styles.container}>
         <TextInput
           style={styles.textInput}
-          placeholder="   Enter the name of the place"
-          onChangeText={(text) => this.setState({nameOfThePlace})}
+          placeholder="Enter the name of the place"
+          onChangeText={(text) => this.setState({ nameOfThePlace: text })}
         />
         <View style={styles.buttonContainer}>
-          <Image
-            style={{height: 50, width: 50}}
-            source={this.state.thumsDown}
-          />
-          <Image
-          style={{height: 50, width: 50}}
-            source={this.state.thumbsUp}
-          />
+          <TouchableHighlight underlayColor='#FFA860' onPress={() => this.thumbsDownPress()}>
+            <Image
+              style={styles.thumbsDown}
+              source={this.state.thumsDown}
+            />
+          </TouchableHighlight>
+          <TouchableHighlight underlayColor='#FFA860' onPress={() => this.thumbsUpPress()}>
+            <Image
+              style={styles.thumbsUp}
+              source={this.state.thumbsUp}
+            />
+          </TouchableHighlight>
         </View>
-        <View style={{flex: 1}}>
-          <TouchableOpacity onPress={this.savePin.bind(this)} style={styles.profile}>
-            <Text>SAVE</Text>
-          </TouchableOpacity>
+        <View style={styles.buttonSendContainer}>
+          <TouchableHighlight style={styles.buttonSendbox} onPress={() => this.sendPin()}>
+            <Text style={{ color: '#FFA860', fontSize: 20 }}>
+              Send!
+            </Text>
+          </TouchableHighlight>
         </View>
 
       </View>
     )
   }
 
-
-//latitude: 37.78825,
-//longitude: -122.4324,
-  savePin(){
-    this.props.geofire.set('Potatoes',[37.78835, -122.4326]).then(function() {
-      console.log("Provided keys have been added to GeoFire");
-    }, function(error) {
-      console.log("Error: " + error);
-    });
+  thumbsUpPress() {
+    this.setState({
+      thumbsUp: require('../../Images/thumbs-up-green.png'),
+      thumsDown: require('../../Images/dislike-thumb-white.png'),
+      thumbsChosen: true,
+      thumbsChoice: 'up'
+    })
   }
 
+  thumbsDownPress() {
+    this.setState({
+      thumbsUp: require('../../Images/thumbs-up-white.png'),
+      thumsDown: require('../../Images/dislike-thumb-red.png'),
+      thumbsChosen: true,
+      thumbsChoice: 'down'
+    })
+  }
+
+  sendPin() {
+    errors = false;
+    //Checking if the thumb input is irght
+    if (this.state.thumbsChoice == '') {
+      Alert.alert(
+        'Error',
+        'Choose thumbs down or thumbs up for those restrooms!',
+        [
+          { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+        ],
+        { cancelable: false }
+      )
+      errors = true;
+    }
+    //Checking if a name is good
+    if (this.state.nameOfThePlace == ''){
+      Alert.alert(
+        'Error',
+        'Enter the name of the place !',
+        [
+          { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+        ],
+        { cancelable: false }
+      )
+      errors = true;
+    }
+    //Sending the item to the database
+    //latitude: 37.78825,
+    //longitude: -122.4324,
+    if(!errors){
+      this.props.geofire.set(this.state.nameOfThePlace,[39.78836, -129.4324]).then(function() {
+        console.log("Provided keys have been added to GeoFire");
+      }, function(error) {
+        console.log("Error: " + error);
+      });
+
+    }
+  }
 }
 
 const styles = new StyleSheet.create({
@@ -95,19 +148,70 @@ const styles = new StyleSheet.create({
       height: 3
     },
     shadowRadius: 2,
-    shadowOpacity: 1.0
+    shadowOpacity: 0.3
   },
   textInput: {
     flex: 0.8,
     margin: 5,
+    padding: 10,
     backgroundColor: 'white',
-    borderRadius: 3
+    borderRadius: 3,
+    shadowColor: '#999999',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowRadius: 3,
+    shadowOpacity: 0.3
+  },
+  thumbsUp: {
+    height: 50,
+    width: 50,
+    shadowColor: '#999999',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowRadius: 3,
+    shadowOpacity: 0.3
+  },
+  thumbsDown: {
+    height: 50,
+    width: 50,
+    shadowColor: '#999999',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowRadius: 3,
+    shadowOpacity: 0.3
   },
   buttonContainer: {
     flex: 1.2,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around'
+  },
+  buttonSendContainer: {
+    flex: 1,
+    alignItems: 'center'
+  },
+  buttonSendbox: {
+    flex: 1,
+    backgroundColor: 'white',
+    marginTop: 15,
+    marginBottom: 5,
+    width: Dimensions.get('window').width / 4,
+    borderRadius: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#999999',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowRadius: 3,
+    shadowOpacity: 0.3
   }
 })
 

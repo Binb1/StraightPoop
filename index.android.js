@@ -15,7 +15,7 @@ const firebaseConfig = {
 };
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
-class StraightPoop extends Component {
+export default class StraightPoop extends Component {
 
   render() {
     return (

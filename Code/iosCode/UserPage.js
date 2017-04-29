@@ -45,7 +45,7 @@ class UserPage extends Component{
     return(
       <View style={styles.container}>
         <View style={styles.top}>
-          <TouchableOpacity onPress={this._navigate.bind(this)}>
+          <TouchableOpacity onPress={this._navigateBack.bind(this)}>
             <Image
               style={styles.arrow}
               source={require('../../Images/left-arrow.png')}
@@ -54,8 +54,7 @@ class UserPage extends Component{
         </View>
         <View style={styles.body}>
           <Text style={styles.description}>Profile</Text>
-          <Text>{this.state.email}</Text>
-          <Text>Username</Text>
+          <Text style={styles.mail}>Username</Text>
           <TextInput
             placeholder={this.state.name == '' ? 'Username' : this.state.username }
             style={styles.inputBox}
@@ -65,9 +64,10 @@ class UserPage extends Component{
           <TextInput
             placeholder={this.state.email == '' ? "Email" : this.state.email }
             style={styles.inputBox}
+            editable={false}
           />
           <TouchableOpacity onPress={this.update.bind(this)}>
-            <Text>Update account</Text>
+            <Text style={{marginBottom: 5}}>Update account</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={this.logout.bind(this)}>
             <Text>Log out</Text>
@@ -77,7 +77,7 @@ class UserPage extends Component{
     );
   };
 
-  _navigate(){
+  _navigateBack(){
     this.props.navigator.pop();
   }
 
@@ -109,11 +109,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
   },
+  mail:{
+    marginBottom: 4,
+    marginTop: 8,
+  },
   description: {
-    marginBottom: 7,
-    color: '#646464',
-    fontSize: 30,
-    fontFamily: 'Avenir'
+    marginBottom: 9,
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 25,
   },
   descriptionUnderline: {
     fontSize: 20,
@@ -122,10 +126,12 @@ const styles = StyleSheet.create({
   },
   inputBox: {
     minHeight: 40,
+    color: '#FFFFFF',
+    fontWeight: 'bold',
     backgroundColor: "#FFA860",
-    margin: 10,
+    margin: 12,
     padding: 5,
-    borderRadius: 4,
+    borderRadius: 5,
   },
 })
 
