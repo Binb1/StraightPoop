@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, AsyncStorage, Image } from 'react-native';
 import MapView from 'react-native-maps';
+import PopUpViewAdd from './PopUpViewAdd.js'
 
 var markers = {
   latlng: { latitude: 37.78825, longitude: -122.4324 }
@@ -39,14 +40,14 @@ class MapViewPins extends Component {
     }
   }
 
-  _navigateToProfile(){
+  _navigateToProfile() {
     this.props.navigator.push({
       name: 'UserPage'
     })
-    }
+  }
 
 
-  componentDidMount(){
+  componentDidMount() {
     //Getting user infos
     var user = this.props.firebaseApp.auth().currentUser;
     var name, email, photoUrl, uid;
@@ -63,16 +64,16 @@ class MapViewPins extends Component {
       (position) => {
         console.log('In')
         this.setState({
-          userPosition: {latitude: position.coords.latitude, longitude: position.coords.longitude, latitudeDelta:  0.0922, longitudeDelta: 0.0421}
+          userPosition: { latitude: position.coords.latitude, longitude: position.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }
         });
       },
       (error) => alert(error.message),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
   }
 
 
-    //Function to auto update the region on the map
+  //Function to auto update the region on the map
   onRegionChange(region) {
     this.setState({
       region
@@ -100,14 +101,21 @@ class MapViewPins extends Component {
           <MapView.Marker
             coordinate={this.state.userPosition}
           />
-        </MapView>  
-        
-          <TouchableOpacity onPress={this._navigateToProfile.bind(this)} style={styles.profile}>
-            <Image
-              style={styles.plusButton}
-              source={require('../../Images/plus.png')}
-            />
-          </TouchableOpacity>
+        </MapView>
+
+        <TouchableOpacity onPress={this._navigateToProfile.bind(this)} style={styles.plus}>
+          <Image
+            style={styles.plusButton}
+            source={require('../../Images/plus.png')}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={this._navigateToProfile.bind(this)} style={styles.profile}>
+          <Image
+            style={styles.profilePage}
+            source={require('../../Images/profilePage.png')}
+          />
+        </TouchableOpacity>
+        <PopUpViewAdd/>
       </View>
     )
   }
@@ -130,13 +138,18 @@ const styles = new StyleSheet.create({
     right: 0,
     bottom: 20,
   },
-  profile: {
+  plus: {
     position: 'absolute',
     bottom: 40,
     right: 20
   },
+  profile: {
+    position: 'absolute',
+    top:40,
+    right: 20
+  },
   plusButton: {
-    width: 70, 
+    width: 70,
     height: 70,
     shadowColor: '#999999',
     shadowOffset: {
@@ -144,6 +157,17 @@ const styles = new StyleSheet.create({
       height: 3
     },
     shadowRadius: 2,
+    shadowOpacity: 1.0
+  },
+  profilePage: {
+    width: 50,
+    height: 50,
+    shadowColor: '#999999',
+    shadowOffset: {
+      width: 0,
+      height: 1.5
+    },
+    shadowRadius: 0.5,
     shadowOpacity: 1.0
   }
 })
