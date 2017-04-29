@@ -43,8 +43,17 @@ class UserPage extends Component{
 
   render(){
     return(
+      <View style={styles.container}>
+        <View style={styles.top}>
+          <TouchableOpacity onPress={this._navigate.bind(this)}>
+            <Image
+              style={styles.arrow}
+              source={require('../../Images/left-arrow.png')}
+            />
+          </TouchableOpacity>
+        </View>
         <View style={styles.body}>
-          <Text>PROFILE</Text>
+          <Text style={styles.description}>Profile</Text>
           <Text>{this.state.email}</Text>
           <Text>Username</Text>
           <TextInput
@@ -64,7 +73,12 @@ class UserPage extends Component{
             <Text>Log out</Text>
           </TouchableOpacity>
         </View>
+       </View>
     );
+  };
+
+  _navigate(){
+    this.props.navigator.pop();
   }
 
 }
@@ -74,30 +88,43 @@ const styles = StyleSheet.create({
     flex: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FFA860',
+  },
+  top:{
+    flex: 3,
+    marginTop: 25,
+    marginRight: 300,
+  },
+  arrow: {
+    width: 30,
+    height: 30,
   },
   body: {
-    flex: 8.6,
+    flex: 7,
     justifyContent: 'center',
     alignItems: 'center',
-    minWidth: 375
+    width: 320,
+    height: 80,
+    marginBottom: 140,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
   },
   description: {
+    marginBottom: 7,
     color: '#646464',
-    fontSize: 50,
+    fontSize: 30,
     fontFamily: 'Avenir'
   },
   descriptionUnderline: {
-    fontSize: 50,
+    fontSize: 20,
     textDecorationLine: 'underline',
     fontFamily: 'Avenir'
   },
   inputBox: {
     minHeight: 40,
-    backgroundColor: "#FFFFFF",
-    marginTop: 10,
-    marginBottom: 10,
-    padding: 10,
+    backgroundColor: "#FFA860",
+    margin: 10,
+    padding: 5,
     borderRadius: 4,
   },
 })
