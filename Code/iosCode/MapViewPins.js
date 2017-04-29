@@ -84,7 +84,6 @@ class MapViewPins extends Component {
   render() {
     console.log('region', this.state.region)
     console.log('userPosition', this.state.userPosition)
-    console.log('test', this.state.bottomViewAdd)
     return (
       <View style={styles.container}>
         <MapView

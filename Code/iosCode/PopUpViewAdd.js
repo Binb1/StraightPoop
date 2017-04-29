@@ -33,7 +33,7 @@ class PopUpViewAdd extends Component {
 
   render() {
     return (
-      <View style={{flex: 3}}>
+      <View style={{ flex: 3 }}>
         <TextInput
           style={styles.textInput}
           placeholder="Enter the name of the place"
@@ -94,24 +94,37 @@ class PopUpViewAdd extends Component {
         'Error',
         'Choose thumbs down or thumbs up for those restrooms!',
         [
-          { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },         
+          { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
         ],
         { cancelable: false }
       )
     }
     //Checking if a name is good
-    if (this.state.nameOfThePlace == ''){
+    if (this.state.nameOfThePlace == '') {
       Alert.alert(
         'Error',
         'Enter the name of the place !',
         [
-          { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },         
+          { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
         ],
         { cancelable: false }
       )
     }
     //Sending the item to the database
+    this.props.closePopUpViewAdd()
 
+    //Reseting the field
+    this.resetField()
+  }
+
+  resetField() {
+    this.setState({
+      thumbsUp: require('../../Images/thumbs-up-white.png'),
+      thumsDown: require('../../Images/dislike-thumb-white.png'),
+      thumbsChosen: false,
+      thumbsChoice: '',
+      nameOfThePlace: ''
+    })
   }
 }
 
