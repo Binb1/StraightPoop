@@ -13,17 +13,17 @@ class SignIn extends Component{
   }
 
   componentWillMount(){
-  //Check if userData is stored on device else open Login
-    AsyncStorage.getItem('userData').then((user_data_json) => {
-      let user_data = JSON.parse(user_data_json);
-      console.log(user_data);
-      if(user_data != ''){
-        /*this.props.navigator.push({
-          name: 'MapViewPins'
-        });*/
-      }
-    });
-  }
+   //Check if userData is stored on device else open Login
+   AsyncStorage.getItem('userData').then((user_data_json) => {
+     let user_data = JSON.parse(user_data_json);
+     if(user_data != null){
+       this.props.navigator.push({
+         name: 'MapViewPins'
+       });
+     }
+   });
+
+ }
 
   signIn(){
     this.setState({

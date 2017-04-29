@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, AsyncStorage } from 'react-native';
 import MapView from 'react-native-maps';
 
 var markers = {
@@ -12,33 +12,28 @@ class MapViewPins extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userPosition: 'ea',
-      region: {
-        latitude: 37.78825,
-        longitude: -122.4324,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      },
-      markers: [
-        {
-          key: 1,
-          title: 'hello',
-          latlng: {
-            latitude: 37.78825,
-            longitude: -122.4324
-          },
-        },
-        {
-          key: 2,
-          title: 'hello',
-          latlng: {
-            latitude: 37.78827,
-            longitude: -122.4226
-          },
-        }
-      ]
+      username: '',
+      email: ''
     }
   }
+
+  componentWillMount(){
+    var user = this.props.firebaseApp.auth().currentUser;
+    var name, email, photoUrl, uid;
+
+    if (user != null) {
+      this.setState({
+        username: user.displayName,
+        email: user.email,
+      });
+    }
+  }
+
+  _navigateToProfile(){
+    this.props.navigator.push({
+      name: 'UserPage'
+    })
+    }
 
 
   componentDidMount(){
@@ -55,24 +50,21 @@ class MapViewPins extends Component {
 
 
   // onRegionChange={this.onRegionChange()}>
-
-
   render() {
     console.log(this.state.userPosition)
     return (
       <View style={styles.container}>
         <MapView
           style={styles.map}
-          initialRegion={this.state.region}>
-
-          {this.state.markers.map(marker => (
-            <MapView.Marker
-              coordinate={marker.latlng}
-              title={marker.title}
-              key={marker.key}
-            />
-          ))}
-        </MapView>
+          initialRegion={{
+            latitude: 37.78825,
+            longitude: -122.4324,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }} />
+          <TouchableOpacity onPress={this._navigateToProfile.bind(this)} style={styles.profile}>
+            <Text>Profile</Text>
+          </TouchableOpacity>
       </View>
     )
   }
@@ -101,6 +93,15 @@ const styles = new StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+  },
+  logout: {
+    backgroundColor: '#FF0000',
+    height: 40,
+    borderRadius: 4,
+    right:0,
+  },
+  profile: {
+
   }
 })
 
