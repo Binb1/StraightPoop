@@ -6,6 +6,7 @@ import UserPage from './Code/iosCode/UserPage.js'
 import SignUp from './Code/iosCode/SignUp.js'
 
 import * as firebase from 'firebase';
+const geofire = require('geofire');
 
 //Initiaizing firebase
 const firebaseConfig = {
@@ -14,10 +15,9 @@ const firebaseConfig = {
   databaseURL: "https://straightpoop-9f9d6.firebaseio.com/",
 };
 const firebaseApp = firebase.initializeApp(firebaseConfig);
+const geofireRef = new geofire(firebaseApp.database().ref())
 
 class StraightPoop extends Component {
-
-
   render() {
     return (
       <Navigator
