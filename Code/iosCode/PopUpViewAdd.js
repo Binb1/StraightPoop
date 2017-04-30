@@ -14,11 +14,15 @@ class PopUpViewAdd extends Component {
       thumsDown: require('../../Images/dislike-thumb-white.png'),
       thumbsChosen: false,
       thumbsChoice: '',
-      bottomViewAdd: this.props.bottomViewAdd
+      bottomViewAdd: this.props.bottomViewAdd,
+      freeChosen: false,
+      freeChoice: '',
+      chosenFreeColor: '#FFA860',
+      inverseFreeColor: '#FFA860',
     }
   }
 
-  componentWillMount(){
+  componentWillMount() {
     var user = this.props.firebaseApp.auth().currentUser;
 
     if (user != null) {
@@ -42,7 +46,7 @@ class PopUpViewAdd extends Component {
 
   render() {
     return (
-      <View style={{ flex: 3 }}>
+      <View style={{ flex: 4 }}>
         <TextInput
           style={styles.textInput}
           placeholder="Enter the name of the place"
@@ -60,6 +64,18 @@ class PopUpViewAdd extends Component {
               style={styles.thumbsUp}
               source={this.state.thumbsUp}
             />
+          </TouchableHighlight>
+        </View>
+        <View style={styles.freeOrPaidContainer}>
+          <TouchableHighlight style={styles.buttonFreeAndPaid} onPress={() => this.freePress()}>
+            <Text style={{ color: this.state.chosenFreeColor, fontSize: 20 }}>
+              Free
+            </Text>
+          </TouchableHighlight>
+          <TouchableHighlight style={styles.buttonFreeAndPaid} onPress={() => this.paidPress()}>
+            <Text style={{ color: this.state.inverseFreeColor, fontSize: 20 }}>
+              $$$
+            </Text>
           </TouchableHighlight>
         </View>
         <View style={styles.buttonSendContainer}>
@@ -96,6 +112,24 @@ class PopUpViewAdd extends Component {
     })
   }
 
+  freePress() {
+    this.setState({
+      chosenFreeColor: 'green',
+      inverseFreeColor: '#FFA860',
+      freeChosen: true,
+      freeChoice: 'yes'
+    })
+  }
+
+  paidPress() {
+    this.setState({
+      chosenFreeColor: '#FFA860',
+      inverseFreeColor: 'green',
+      freeChosen: true,
+      freeChoice: 'no'
+    })
+  }
+
   sendPin() {
     errors = false;
     //Checking if the thumb input is irght
@@ -122,13 +156,25 @@ class PopUpViewAdd extends Component {
       )
       errors = true;
     }
+    //Checking free chosen
+    if (this.state.freeChosen == false) {
+      Alert.alert(
+        'Error',
+        'Enter if the restrooms are free or not !',
+        [
+          { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+        ],
+        { cancelable: false }
+      )
+      errors = true;
+    }
     //Sending the item to the database
     //latitude: 37.78825,
     //longitude: -122.4324,
-    if(!errors){
-      this.props.geofire.set(this.state.nameOfThePlace,[39.78836, -129.4324]).then(function() {
+    if (!errors) {
+      this.props.geofire.set(this.state.nameOfThePlace, [39.78836, -129.4324]).then(function () {
         console.log("Provided keys have been added to GeoFire");
-      }, function(error) {
+      }, function (error) {
         console.log("Error: " + error);
       });
 
@@ -152,7 +198,7 @@ class PopUpViewAdd extends Component {
 
 const styles = new StyleSheet.create({
   textInput: {
-    flex: 0.8,
+    flex: 0.6,
     margin: 5,
     padding: 10,
     backgroundColor: 'white',
@@ -200,15 +246,37 @@ const styles = new StyleSheet.create({
     alignItems: 'center'
   },
   buttonSendbox: {
-    flex: 1,
     backgroundColor: 'white',
     marginTop: 15,
     marginBottom: 5,
-    marginLeft: 10,
-    marginRight: 10,
-    width: Dimensions.get('window').width / 4,
+    width: Dimensions.get('window').width / 3,
+    height: Dimensions.get('window').height / 20,
     borderRadius: 3,
     alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#999999',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowRadius: 3,
+    shadowOpacity: 0.3
+  },
+  freeOrPaidContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center'
+  },
+  buttonFreeAndPaid: {
+    backgroundColor: 'white',
+    marginTop: 15,
+    marginBottom: 5,
+    width: Dimensions.get('window').width / 6,
+    height: Dimensions.get('window').height / 20,
+    borderRadius: 3,
+    alignItems: 'center',
+    justifyContent: 'center',
     shadowColor: '#999999',
     shadowOffset: {
       width: 0,

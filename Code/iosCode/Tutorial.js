@@ -17,6 +17,7 @@ class Tutorial extends Component {
         <StatusBar translucent backgroundColor="rgba(255,255,255,0)" />
         <View style={style.tutorial}>
           <View style={style.line}>
+<<<<<<< HEAD
             <View style={style.imgbox}>
               <Image style={style.pin} source={require("../../Images/Red.png")}>
 
@@ -26,6 +27,14 @@ class Tutorial extends Component {
                 />
               </Image>
             </View>
+=======
+            <Image style={style.pin} source={require("../../Images/Red.png")}>
+              <Image
+                style={style.pin2}
+                source={require("../../Images/Green.png")}
+              />
+            </Image>
+>>>>>>> b2425d812abecdf6f9cb9ec9f3be4b41b1df5de6
             <View style={style.textbox}>
               <Text style={style.text}>
                 Find the best restrooms around you!
@@ -33,6 +42,7 @@ class Tutorial extends Component {
             </View>
           </View>
           <View style={style.line}>
+<<<<<<< HEAD
             <View style={style.imgbox}>
               <Image
                 style={style.pin}
@@ -44,6 +54,17 @@ class Tutorial extends Component {
                 />
               </Image>
             </View>
+=======
+            <Image
+              style={style.pin}
+              source={require("../../Images/RedMoney.png")}
+            >
+              <Image
+                style={style.pin2}
+                source={require("../../Images/GreenMoney.png")}
+              />
+            </Image>
+>>>>>>> b2425d812abecdf6f9cb9ec9f3be4b41b1df5de6
             <View style={style.textbox}>
               <Text style={style.text}>
                 You might have to buy something to access stores{"\'"} restrooms.
@@ -51,6 +72,7 @@ class Tutorial extends Component {
             </View>
           </View>
           <View style={style.line}>
+<<<<<<< HEAD
             <View style={style.imgbox}>
               <Image
                 style={style.pin}
@@ -62,6 +84,17 @@ class Tutorial extends Component {
                 />
               </Image>
             </View>
+=======
+            <Image
+              style={style.pin}
+              source={require("../../Images/YellowMoney.png")}
+            >
+              <Image
+                style={style.pin2}
+                source={require("../../Images/Yellow.png")}
+              />
+            </Image>
+>>>>>>> b2425d812abecdf6f9cb9ec9f3be4b41b1df5de6
             <View style={style.textbox}>
               <Text style={style.text}>
                 Look out for your best option!
