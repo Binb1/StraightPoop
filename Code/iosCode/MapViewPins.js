@@ -101,7 +101,8 @@ class MapViewPins extends Component {
     );
 
 
-
+    timer.setInterval('deepshit', () => this.deepShit(), 5000);
+    timer.setInterval('trickedMove', () => this.trickedMove(), 2000)
 
   }
 
@@ -121,8 +122,14 @@ class MapViewPins extends Component {
   }
   //We will have to retrieve the information from the database.
 
-  deepShit() {
+  trickedMove() {
+    this.setState({
+      region: this.state.region
+    })
+  }
 
+  deepShit() {
+    console.log("CALLED")
     var items = [];
     console.log(keyStorage.length)
     for (var j = 0; j < keyStorage.length; j++) {
@@ -142,13 +149,13 @@ class MapViewPins extends Component {
     console.log(globalCounter)
 
     if (items.length > 0) {
+      markers = []
       for (var i = 0; i < items.length; i++) {
         markers.push({ key: items[i]._key, latlng: markersAux[items[i]._key].latlng, image: this.rightImage(items[i]) })
         console.log(markers)
         called = true
       }
     }
-
   }
 
   rightImage(items) {
