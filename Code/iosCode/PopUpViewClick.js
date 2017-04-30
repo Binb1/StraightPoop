@@ -19,7 +19,6 @@ class PopUpViewAdd extends Component {
       freeChoice: '',
       chosenFreeColor: '#FFA860',
       inverseFreeColor: '#FFA860',
-      itemsRef: this.props.firebaseApp.database()
     }
   }
 
@@ -33,9 +32,7 @@ class PopUpViewAdd extends Component {
     }
   }
 
-  componentDidMount() {
 
-  }
 
 
   //Function to auto update the region on the map
@@ -47,12 +44,13 @@ class PopUpViewAdd extends Component {
 
   render() {
     return (
-      <View style={{ flex: 4 }}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Enter the name of the place"
-          onChangeText={(text) => this.setState({ nameOfThePlace: text })}
-        />
+      <View style={{ flex: 3 }}>
+        <View style={{flex: 0.6, alignItems: 'center', justifyContent: 'center'}}>
+        <Text
+          style={{color: 'white', fontSize: 35, fontWeight: '400'}}>
+          name
+         </Text>
+         </View>
         <View style={styles.buttonContainer}>
           <TouchableHighlight underlayColor='#FFA860' onPress={() => this.thumbsDownPress()}>
             <Image
@@ -65,18 +63,6 @@ class PopUpViewAdd extends Component {
               style={styles.thumbsUp}
               source={this.state.thumbsUp}
             />
-          </TouchableHighlight>
-        </View>
-        <View style={styles.freeOrPaidContainer}>
-          <TouchableHighlight style={styles.buttonFreeAndPaid} onPress={() => this.freePress()}>
-            <Text style={{ color: this.state.chosenFreeColor, fontSize: 20 }}>
-              Free
-            </Text>
-          </TouchableHighlight>
-          <TouchableHighlight style={styles.buttonFreeAndPaid} onPress={() => this.paidPress()}>
-            <Text style={{ color: this.state.inverseFreeColor, fontSize: 20 }}>
-              $$$
-            </Text>
           </TouchableHighlight>
         </View>
         <View style={styles.buttonSendContainer}>
@@ -172,39 +158,14 @@ class PopUpViewAdd extends Component {
     //Sending the item to the database
     //latitude: 37.78825,
     //longitude: -122.4324,
-
-    var id = this.state.itemsRef.ref("custom").push({
-      'name': this.state.nameOfThePlace,
-      'positive': this.state.thumbsChoice == 'up' ? 1 :0,
-      'negative': this.state.thumbsChoice == 'up' ? 0 :1,
-      'grade': this.state.thumbsChoice == 'up' ? 1.0 :0.0,
-      'pay': false,
-      'pinType': 'Green'}).key;
-
-      this.props.geofire.set(id, [39.78836, -129.4324]).then(function() {
-        console.log("Provided key has been added to GeoFire");
-      }, function(error) {
-        console.log("Error: " + error);
-      });
-
-
-    /*this.props.geoQuery.on("key_entered", function(key, location, distance) {
-      console.log(key + " entered query at " + location + " (" + distance + " km from center)");
-    });
-    if(!errors){
-      this.props.geofire.set(this.state.nameOfThePlace,[39.78836, -129.4324]).then(function() {
-=======
     if (!errors) {
       this.props.geofire.set(this.state.nameOfThePlace, [39.78836, -129.4324]).then(function () {
->>>>>>> origin/master
         console.log("Provided keys have been added to GeoFire");
       }, function (error) {
         console.log("Error: " + error);
-      });*/
+      });
 
-
-
-
+    }
     this.props.closePopUpViewAdd()
 
     //Reseting the field

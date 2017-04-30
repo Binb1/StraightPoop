@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, AsyncStorage, Image, Animated } from 'react-native';
 import MapView from 'react-native-maps';
 import PopUpViewAdd from './PopUpViewAdd.js'
+import PopUpViewClick from './PopUpViewClick.js'
 
 var northPole = {
-        latitude: -90,
-        longitude: -180,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      }
+  latitude: -90,
+  longitude: -180,
+  latitudeDelta: 0.0922,
+  longitudeDelta: 0.0421,
+}
 
 class MapViewPins extends Component {
 
@@ -40,6 +41,7 @@ class MapViewPins extends Component {
       username: '',
       email: '',
       bottomViewAdd: -250,
+      bottomViewClick: -200,
       markerPointerAdd: {
         latitude: -90,
         longitude: -180,
@@ -77,10 +79,7 @@ class MapViewPins extends Component {
       radius: 3.5
     });
 
-    // For every key which matches our GeoQuery...
-    geoQuery.on("key_entered", function(key, location, distance) {
-      console.log(key + " entered query at " + location + " (" + distance + " km from center)");
-    });
+
 
     //Getting user position
     navigator.geolocation.getCurrentPosition(
@@ -102,7 +101,7 @@ class MapViewPins extends Component {
     this.setState({
       region,
     });
-    if (this.state.addingPin == true){
+    if (this.state.addingPin == true) {
       this.setState({
         markerPointerAdd: region
       })
@@ -122,6 +121,7 @@ class MapViewPins extends Component {
 
           {this.state.markers.map(marker => (
             <MapView.Marker
+              onPress={() => this.displayPopUpClick()}
               coordinate={marker.latlng}
               title={marker.title}
               key={marker.key}
@@ -167,7 +167,29 @@ class MapViewPins extends Component {
           shadowRadius: 2,
           shadowOpacity: 0.3
         }}>
-          <PopUpViewAdd bottomViewAdd={this.state.bottomViewAdd} closePopUpViewAdd={this.closePopUpViewAdd.bind(this) } firebaseApp={this.props.firebaseApp} />
+          <PopUpViewAdd bottomViewAdd={this.state.bottomViewAdd} closePopUpViewAdd={this.closePopUpViewAdd.bind(this)} geofire={this.props.geofire} firebaseApp={this.props.firebaseApp} />
+        </Animated.View>
+
+        <Animated.View style={{
+          flex: 3,
+          height: 200,
+          borderWidth: 3,
+          borderColor: 'white',
+          borderRadius: 10,
+          position: 'absolute',
+          left: 10,
+          right: 10,
+          bottom: this.state.bottomViewClick,
+          backgroundColor: '#FFA860',
+          shadowColor: '#999999',
+          shadowOffset: {
+            width: 0,
+            height: 3
+          },
+          shadowRadius: 2,
+          shadowOpacity: 0.3
+        }}>
+          <PopUpViewClick closePopUpViewAdd={this.closePopUpViewClick.bind(this)} geofire={this.props.geofire} firebaseApp={this.props.firebaseApp} />
         </Animated.View>
       </View>
     )
@@ -181,12 +203,24 @@ class MapViewPins extends Component {
     })
   }
 
-  closePopUpViewAdd(){
+  closePopUpViewAdd() {
     this.setState({
       bottomViewAdd: -250,
       addingPin: false,
       markerPointerAddValue: this.state.markerPointerAddValue,
       markerPointerAdd: northPole
+    })
+  }
+
+  closePopUpViewClick(){
+    this.setState({
+      bottomViewClick: -200,
+    })
+  }
+
+  displayPopUpClick(){
+    this.setState({
+      bottomViewClick: 40
     })
   }
 }
