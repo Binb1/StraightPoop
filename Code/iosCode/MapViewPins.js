@@ -101,10 +101,6 @@ class MapViewPins extends Component {
     );
 
 
-    this.setTimeout(
-      () => { console.log('I do not leak!'); },
-      500
-    );
 
 
   }
