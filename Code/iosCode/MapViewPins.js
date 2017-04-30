@@ -113,6 +113,8 @@ class MapViewPins extends Component {
       radius: 3000,
     });
     var counter = 3;
+    keyStorage = []
+    markersAux = []
     var variable = geoQuery.on("key_entered", function (key, location, distance) {
       console.log(key + " entered query at " + location[0] + " (" + distance + " km from center)");
       keyStorage[counter - 3] = key
