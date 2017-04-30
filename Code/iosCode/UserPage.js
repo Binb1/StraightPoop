@@ -73,6 +73,20 @@ class UserPage extends Component{
             <Text>Log out</Text>
           </TouchableOpacity>
         </View>
+        <View style={styles.bottom}>
+          <Text style={styles.bottonText}>You have reviewed COUNTER restrooms! {"\n"}
+          Your next achievement is in VALUE reviews! {"\n"}</Text>
+          <View style={styles.images}>
+          <Image
+            style={styles.achievements}
+            source={require('../../Images/poop.png')}
+          />
+          <Image
+              style={styles.achievements}
+              source={require('../../Images/SimpleToilet.png')}
+            />
+          </View>
+        </View>
        </View>
     );
   };
@@ -91,23 +105,43 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFA860',
   },
   top:{
-    flex: 3,
+    flex: 1,
     marginTop: 25,
-    marginRight: 300,
+    marginRight: 290,
   },
   arrow: {
     width: 30,
     height: 30,
   },
   body: {
-    flex: 7,
+    flex: 6,
     justifyContent: 'center',
     alignItems: 'center',
     width: 320,
     height: 80,
-    marginBottom: 140,
+    marginBottom: 20,
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
+  },
+  bottom: {
+    flex: 3,
+    width: 320,
+    height: 50,
+    marginBottom: 20,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  bottonText:{
+    marginLeft: 8,
+    textAlign: 'center',
+    marginTop: 12,
+  },
+  images:{
+    flex: 2,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   mail:{
     marginBottom: 4,
@@ -118,6 +152,12 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'bold',
     fontSize: 25,
+  },
+  achievements:{
+    overlayColor: 'gray',
+    width: 30,
+    height: 30,
+    marginBottom: 5,
   },
   descriptionUnderline: {
     fontSize: 20,

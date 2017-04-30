@@ -69,7 +69,7 @@ class SignUp extends Component{
           loading: false
         });
         this.props.navigator.push({
-          name: "MapViewPins"
+          name: "Tutorial"
         });
     }).catch((error) => {
       // Leave the fields filled when an error occurs and hide the progress indicator.

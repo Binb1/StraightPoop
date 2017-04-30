@@ -39,7 +39,7 @@ class MapViewPins extends Component {
       ],
       username: '',
       email: '',
-      bottomViewAdd: -200,
+      bottomViewAdd: -250,
       markerPointerAdd: {
         latitude: -90,
         longitude: -180,
@@ -146,8 +146,8 @@ class MapViewPins extends Component {
           />
         </TouchableOpacity>
         <Animated.View style={{
-          flex: 3,
-          height: 200,
+          flex: 4,
+          height: 250,
           borderWidth: 3,
           borderColor: 'white',
           borderRadius: 10,
@@ -180,7 +180,7 @@ class MapViewPins extends Component {
 
   closePopUpViewAdd(){
     this.setState({
-      bottomViewAdd: -200,
+      bottomViewAdd: -250,
       addingPin: false,
       markerPointerAddValue: this.state.markerPointerAddValue,
       markerPointerAdd: northPole
