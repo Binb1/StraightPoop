@@ -11,6 +11,19 @@ var northPole = {
   longitudeDelta: 0.0421,
 }
 
+var markersBis = [];
+var markers = [
+  {
+    key: 1,
+    title: 'hello',
+    latlng: {
+      latitude: 37.78825,
+      longitude: -122.4324
+    },
+  },
+]
+
+
 class MapViewPins extends Component {
 
   constructor(props) {
@@ -28,16 +41,6 @@ class MapViewPins extends Component {
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       },
-      markers: [
-        {
-          key: 1,
-          title: 'hello',
-          latlng: {
-            latitude: 37.78825,
-            longitude: -122.4324
-          },
-        },
-      ],
       username: '',
       email: '',
       bottomViewAdd: -250,
@@ -54,7 +57,8 @@ class MapViewPins extends Component {
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       },
-      addingPin: false
+      addingPin: false,
+      checkCompleteBool: false
     }
   }
 
@@ -89,33 +93,27 @@ class MapViewPins extends Component {
           userPosition: { latitude: position.coords.latitude, longitude: position.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 },
           region: { latitude: position.coords.latitude, longitude: position.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 },
         },
-        this.geoQueryLauncher(latitude, longitude));
+          this.geoQueryLauncher(latitude, longitude));
       },
       (error) => alert(error.message),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
-
   }
 
-
-
-  geoQueryLauncher( latitude,  longitude){
+  geoQueryLauncher(latitude, longitude) {
     var geoQuery = this.props.geofire.query({
       center: [this.state.region.latitude, this.state.region.longitude],
       radius: 6000,
     });
-    var counter = 0;
-    var markersBis = [];
-    var variable = geoQuery.on("key_entered", function(key, location, distance) {
-      console.log(key + " entered query at " + location + " (" + distance + " km from center)");
-      markersBis[counter] = {key: counter, title: 'hello', latlng: {latitude: location.latitude, longitude: location.longitude}};
-      console.log(":::::::::: " + markersBis[counter]);
-      counter++;
-    });
-    this.setState({
-      markers: markersBis,
-    })
+    var counter = 3;
+    var variable = geoQuery.on("key_entered", function (key, location, distance) {
+            console.log(":::::weqweqwewqeqw " + markers);
 
+      console.log(key + " entered query at " + location[0] + " (" + distance + " km from center)");
+      markers.push({ key: counter, title: 'hello', latlng: { latitude: location[0], longitude: location[1] } }, );
+      console.log(":::::::::: " + markers);
+      counter++;
+    })
   }
 
 
@@ -131,6 +129,8 @@ class MapViewPins extends Component {
     }
   }
 
+
+
   render() {
     console.log('region', this.state.region)
     console.log('userPosition', this.state.markerPointerAddValue)
@@ -142,7 +142,7 @@ class MapViewPins extends Component {
           region={this.state.region}
           onRegionChange={this.onRegionChange.bind(this)}>
 
-          {this.state.markers.map(marker => (
+          {markers.map(marker => (
             <MapView.Marker
               onPress={() => this.displayPopUpClick()}
               coordinate={marker.latlng}
@@ -212,7 +212,7 @@ class MapViewPins extends Component {
           shadowRadius: 2,
           shadowOpacity: 0.3
         }}>
-          <PopUpViewClick closePopUpViewAdd={this.closePopUpViewAdd.bind(this)} geofire={this.props.geofire} firebaseApp={this.props.firebaseApp} markerPointerAddValue={this.state.markerPointerAddValue}/>
+          <PopUpViewClick closePopUpViewAdd={this.closePopUpViewAdd.bind(this)} geofire={this.props.geofire} firebaseApp={this.props.firebaseApp} markerPointerAddValue={this.state.markerPointerAddValue} />
         </Animated.View>
       </View>
     )
@@ -235,13 +235,13 @@ class MapViewPins extends Component {
     })
   }
 
-  closePopUpViewClick(){
+  closePopUpViewClick() {
     this.setState({
       bottomViewClick: -200,
     })
   }
 
-  displayPopUpClick(){
+  displayPopUpClick() {
     this.setState({
       bottomViewClick: 40
     })
