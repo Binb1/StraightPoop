@@ -115,7 +115,7 @@ class MapViewPins extends Component {
     this.setState({
       markers: markersBis,
     })
-    
+
   }
 
 
@@ -232,6 +232,12 @@ class MapViewPins extends Component {
       addingPin: false,
       markerPointerAddValue: this.state.markerPointerAddValue,
       markerPointerAdd: northPole
+    })
+  }
+
+  closePopUpViewClick(){
+    this.setState({
+      bottomViewClick: -200,
     })
   }
 

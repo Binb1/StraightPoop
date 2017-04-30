@@ -88,12 +88,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FFA860',
-    minWidth: 375
   },
   top:{
     flex: 1,
     marginTop: 25,
-    marginRight: 300,
+    marginRight: 280,
   },
   arrow: {
     width: 30,
@@ -103,9 +102,9 @@ const styles = StyleSheet.create({
     flex: 6,
     justifyContent: 'center',
     alignItems: 'center',
-    width: 320,
+    minWidth: 300,
     height: 80,
-    marginBottom: 140,
+    marginBottom: 100,
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
   },
@@ -116,32 +115,11 @@ const styles = StyleSheet.create({
   },
   registerText:{
     color: 'white',
-    marginRight: 15,
-    marginLeft: 15,
     fontWeight: 'bold',
     fontSize: 25,
     textAlign: 'center',
-  },
-  backContainer:{
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    padding: 20,
-  },
-  logoContainer:{
-    flex: 3 ,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  arrowBack:{
-    width: 30,
-    height: 30,
-    tintColor: '#FFFFFF',
-  },
-  iconLogo:{
-    color: '#FFFFFF',
-    fontSize: 40,
-    fontFamily: 'Avenir-Black'
+    marginLeft: 5,
+    marginRight: 5,
   },
   inputs: {
     minHeight: 40,
@@ -153,8 +131,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   signInButton:{
-    borderWidth: 1,
-    borderColor: '#FFA860',
     backgroundColor: '#FFA860',
     minWidth: 200,
     minHeight: 40,
@@ -173,13 +149,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-  titleTopBox:{
-    color: '#FFFFFF',
-    fontSize: 20,
-    textDecorationLine: 'underline',
-    textAlign: 'center',
-    fontFamily: 'Avenir-Black'
-  }
 });
 
 export default SignUp;
