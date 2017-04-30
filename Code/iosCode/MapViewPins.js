@@ -137,19 +137,18 @@ class MapViewPins extends Component {
   }
 
   listenForItems(itemsRef) {
-		itemsRef.on('value', (snap) => {
+    console.log("+++++++++" + itemsRef.child("-Kix6SdTzZrj4bS9tV0q"))
+		itemsRef.child('-Kix6SdTzZrj4bS9tV0q').on('value', (snap) => {
 			// get children as an array
 			var items = [];
-			snap.key('-Kix6SdTzZrj4bS9tV0q').forEach((child) => {
 				items.push({
-					name: child.val().name,
-					grade: child.val().grade,
-					negative: child.val().negative,
-					positive: child.val().positive,
-          pay: child.val().pay,
-					_key: child.key
+					name: snap.val().name,
+					grade: snap.val().grade,
+					negative: snap.val().negative,
+					positive: snap.val().positive,
+          pay: snap.val().pay,
+					_key: snap.key
 				});
-			});
       console.log("dsadsa", items)
 
 		});
