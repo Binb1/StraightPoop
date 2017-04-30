@@ -22,6 +22,7 @@ var markers = [
     },
   },
 ]
+var keyStorage = []
 
 
 class MapViewPins extends Component {
@@ -29,6 +30,7 @@ class MapViewPins extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      itemsRef: this.props.firebaseApp.database().ref('/custom'),
       userPosition: {
         latitude: 17.78825,
         longitude: -102.4324,
@@ -81,7 +83,7 @@ class MapViewPins extends Component {
       });
     }
 
-
+    this.listenForItems(this.state.itemsRef)
 
     //Getting user position
     navigator.geolocation.getCurrentPosition(
@@ -103,18 +105,19 @@ class MapViewPins extends Component {
   geoQueryLauncher(latitude, longitude) {
     var geoQuery = this.props.geofire.query({
       center: [this.state.region.latitude, this.state.region.longitude],
-      radius: 6000,
+      radius: 3000,
     });
     var counter = 3;
     var variable = geoQuery.on("key_entered", function (key, location, distance) {
-            console.log(":::::weqweqwewqeqw " + markers);
-
       console.log(key + " entered query at " + location[0] + " (" + distance + " km from center)");
+      keyStorage[counter - 3] = key
       markers.push({ key: counter, title: 'hello', latlng: { latitude: location[0], longitude: location[1] } }, );
-      console.log(":::::::::: " + markers);
       counter++;
     })
   }
+  //We will have to retrieve the information from the database.
+
+
 
 
   //Function to auto update the region on the map
@@ -127,7 +130,30 @@ class MapViewPins extends Component {
         markerPointerAdd: region
       })
     }
+    for (var i = 0; i < keyStorage.length; i++) {
+
+
+    }
   }
+
+  listenForItems(itemsRef) {
+		itemsRef.on('value', (snap) => {
+			// get children as an array
+			var items = [];
+			snap.key('-Kix6SdTzZrj4bS9tV0q').forEach((child) => {
+				items.push({
+					name: child.val().name,
+					grade: child.val().grade,
+					negative: child.val().negative,
+					positive: child.val().positive,
+          pay: child.val().pay,
+					_key: child.key
+				});
+			});
+      console.log("dsadsa", items)
+
+		});
+	}
 
 
 
