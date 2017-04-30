@@ -51,6 +51,8 @@ class SignIn extends Component{
   render(){
     return(
       <View style={styles.container}>
+      <View style={styles.blank}>
+      </View>
         <View style={styles.welcome}>
         <Image
             style={styles.logo}
@@ -58,6 +60,7 @@ class SignIn extends Component{
           />
           <Text style={styles.title}>Welcome to Straight Poop!</Text>
         </View>
+        <View style={styles.bottom}>
         <Text style={styles.topBox}>Email:</Text>
         <TextInput style={styles.inputs} onChangeText={(text) => this.setState({email: text})}/>
         <Text style={styles.topBox}>Password:</Text>
@@ -68,6 +71,9 @@ class SignIn extends Component{
         <TouchableOpacity onPress={this._navigateToSignUp.bind(this)}>
           <Text>Click Here to Sign Up</Text>
         </TouchableOpacity>
+        </View>
+        <View style={styles.blank}>
+        </View>
       </View>
     );
   };
@@ -86,43 +92,44 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FFA860',
-    minWidth: 375,
+  },
+  blank:{
+    flex: 1,
   },
   welcome:{
+    flex: 3,
     justifyContent: 'center',
     alignItems: 'center',
-    minWidth: 30,
+  },
+  bottom:{
+    flex: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   title:{
-    marginBottom: 40,
+    marginBottom: 10,
     color: '#FFFFFF',
     fontSize: 22,
     fontWeight: 'bold',
+    textAlign: 'justify',
   },
   logo:{
-    marginTop: 10,
-    marginBottom:30,
-    marginLeft: 125,
-    marginRight:125,
+    marginBottom: 20,
     height: 100,
     width: 100,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  iconLogo:{
-    color: '#FFFFFF',
-    fontSize: 40,
-    fontFamily: 'Avenir-Black'
-  },
   inputs: {
     minHeight: 40,
+    minWidth: 250,
     backgroundColor: "#FFFFFF",
     marginTop: 10,
     marginBottom: 10,
     marginRight: 20,
     marginLeft: 20,
     padding: 10,
-    borderRadius: 4,
+    borderRadius: 5,
   },
   signInButton:{
     borderWidth: 1,
@@ -146,13 +153,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-  titleTopBox:{
-    color: '#FFFFFF',
-    fontSize: 20,
-    textDecorationLine: 'underline',
-    textAlign: 'center',
-    fontFamily: 'Avenir-Black'
-  }
 });
 
 export default SignIn;

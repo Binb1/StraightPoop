@@ -23,7 +23,7 @@ class StraightPoop extends Component {
     return (
       <Navigator
         style={{ flex: 1 }}
-        initialRoute={{ name: 'UserPage' }}
+        initialRoute={{ name: 'MapViewPins' }}
         renderScene={this.renderScene.bind(this)}
       />
     )
