@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { AppRegistry,StyleSheet,Text,View, Navigator } from 'react-native';
-import MapViewPins from './Code/androidCode/MapViewPins.js'
-import SignIn from './Code/androidCode/SignIn.js'
-import UserPage from './Code/androidCode/UserPage.js'
-import Tutorial from './Code/androidCode/Tutorial.js'
+import MapViewPins from './Code/iosCode/MapViewPins.js'
+import SignIn from './Code/iosCode/SignIn.js'
+import UserPage from './Code/iosCode/UserPage.js'
+import SignUp from './Code/iosCode/SignUp.js'
+import Tutorial from './Code/iosCode/Tutorial.js'
 
 import * as firebase from 'firebase';
 
@@ -29,14 +30,20 @@ export default class StraightPoop extends Component {
 
   renderScene(route, navigator) {
     //Loads the main page
+     if (route.name == 'Tutorial'){
+      return <Tutorial navigator={navigator} firebaseApp={firebaseApp} />
+    }
     if (route.name == 'MapViewPins'){
-      return <MapViewPins navigator={navigator} firebaseApp={firebaseApp} />
+      return <MapViewPins navigator={navigator} firebaseApp={firebaseApp} geofire={geofireRef}/>
     }
     if (route.name == 'UserPage'){
       return <UserPage navigator={navigator} firebaseApp={firebaseApp} />
     }
-    if (route.name == 'Tutorial'){
-      return <Tutorial navigator={navigator} firebaseApp={firebaseApp} />
+    if(route.name == 'SignIn'){
+      return <SignIn navigator={navigator} firebaseApp={firebaseApp} />
+    }
+    if(route.name == 'SignUp'){
+      return <SignUp navigator={navigator} firebaseApp={firebaseApp}/>
     }
   }
 }
