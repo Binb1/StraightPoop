@@ -16,7 +16,7 @@ const firebaseConfig = {
   databaseURL: "https://straightpoop-9f9d6.firebaseio.com/",
 };
 const firebaseApp = firebase.initializeApp(firebaseConfig);
-const geofireRef = new geofire(firebaseApp.database().ref())
+const geofireRef = new geofire(firebaseApp.database().ref('location'));
 
 class StraightPoop extends Component {
   render() {

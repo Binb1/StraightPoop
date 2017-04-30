@@ -19,6 +19,7 @@ class PopUpViewAdd extends Component {
       freeChoice: '',
       chosenFreeColor: '#FFA860',
       inverseFreeColor: '#FFA860',
+      itemsRef: this.props.firebaseApp.database()
     }
   }
 
@@ -172,7 +173,21 @@ class PopUpViewAdd extends Component {
     //latitude: 37.78825,
     //longitude: -122.4324,
 
-    this.state.itemsRef.ref("custom").push({'name': this.state.nameOfThePlace, 'positive': this.state.thumbsChoice == 'up' ? 1 :0, 'negative': this.state.thumbsChoice == 'up' ? 0 :1  });
+    var id = this.state.itemsRef.ref("custom").push({
+      'name': this.state.nameOfThePlace,
+      'positive': this.state.thumbsChoice == 'up' ? 1 :0,
+      'negative': this.state.thumbsChoice == 'up' ? 0 :1,
+      'grade': this.state.thumbsChoice == 'up' ? 1.0 :0.0,
+      'pay': false,
+      'pinType': 'Green'}).key;
+
+      this.props.geofire.set(id, [39.78836, -129.4324]).then(function() {
+        console.log("Provided key has been added to GeoFire");
+      }, function(error) {
+        console.log("Error: " + error);
+      });
+
+
     /*this.props.geoQuery.on("key_entered", function(key, location, distance) {
       console.log(key + " entered query at " + location + " (" + distance + " km from center)");
     });

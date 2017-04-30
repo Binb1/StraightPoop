@@ -77,7 +77,7 @@ class MapViewPins extends Component {
       radius: 3.5
     });
 
-    
+
 
     //Getting user position
     navigator.geolocation.getCurrentPosition(
