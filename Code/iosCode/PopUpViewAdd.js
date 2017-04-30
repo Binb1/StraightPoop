@@ -46,6 +46,8 @@ class PopUpViewAdd extends Component {
   }
 
   render() {
+    console.log(this.props.markerPointerAddValue.latitude);
+
     return (
       <View style={{ flex: 4 }}>
         <TextInput
@@ -181,7 +183,8 @@ class PopUpViewAdd extends Component {
       'pay': false,
       'pinType': 'Green'}).key;
 
-      this.props.geofire.set(id, [39.78836, -129.4324]).then(function() {
+
+      this.props.geofire.set(id, [this.props.markerPointerAddValue.latitude, this.props.markerPointerAddValue.longitude]).then(function() {
         console.log("Provided key has been added to GeoFire");
       }, function(error) {
         console.log("Error: " + error);

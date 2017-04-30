@@ -49,7 +49,10 @@ class MapViewPins extends Component {
         longitudeDelta: 0.0421,
       },
       markerPointerAddValue: {
-
+        latitude: 17.78825,
+        longitude: -102.4324,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
       },
       addingPin: false
     }
@@ -74,25 +77,45 @@ class MapViewPins extends Component {
       });
     }
 
-    var geoQuery = this.props.geofire.query({
-      center: [39.78839, -129.4320],
-      radius: 3.5
-    });
-
 
 
     //Getting user position
     navigator.geolocation.getCurrentPosition(
       (position) => {
         console.log('In')
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
         this.setState({
           userPosition: { latitude: position.coords.latitude, longitude: position.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 },
           region: { latitude: position.coords.latitude, longitude: position.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 },
-        });
+        },
+        this.geoQueryLauncher(latitude, longitude));
       },
       (error) => alert(error.message),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
+
+  }
+
+
+
+  geoQueryLauncher( latitude,  longitude){
+    var geoQuery = this.props.geofire.query({
+      center: [this.state.region.latitude, this.state.region.longitude],
+      radius: 6000,
+    });
+    var counter = 0;
+    var markersBis = [];
+    var variable = geoQuery.on("key_entered", function(key, location, distance) {
+      console.log(key + " entered query at " + location + " (" + distance + " km from center)");
+      markersBis[counter] = {key: counter, title: 'hello', latlng: {latitude: location.latitude, longitude: location.longitude}};
+      console.log(":::::::::: " + markersBis[counter]);
+      counter++;
+    });
+    this.setState({
+      markers: markersBis,
+    })
+    
   }
 
 
@@ -110,7 +133,7 @@ class MapViewPins extends Component {
 
   render() {
     console.log('region', this.state.region)
-    console.log('userPosition', this.state.userPosition)
+    console.log('userPosition', this.state.markerPointerAddValue)
     return (
       <View style={styles.container}>
         <MapView
@@ -167,7 +190,7 @@ class MapViewPins extends Component {
           shadowRadius: 2,
           shadowOpacity: 0.3
         }}>
-          <PopUpViewAdd bottomViewAdd={this.state.bottomViewAdd} closePopUpViewAdd={this.closePopUpViewAdd.bind(this)} geofire={this.props.geofire} firebaseApp={this.props.firebaseApp} />
+          <PopUpViewAdd bottomViewAdd={this.state.bottomViewAdd} closePopUpViewAdd={this.closePopUpViewAdd.bind(this)} geofire={this.props.geofire} firebaseApp={this.props.firebaseApp} markerPointerAddValue={this.state.markerPointerAdd} />
         </Animated.View>
 
         <Animated.View style={{
@@ -189,7 +212,7 @@ class MapViewPins extends Component {
           shadowRadius: 2,
           shadowOpacity: 0.3
         }}>
-          <PopUpViewClick closePopUpViewAdd={this.closePopUpViewAdd.bind(this)} geofire={this.props.geofire} firebaseApp={this.props.firebaseApp} />
+          <PopUpViewClick closePopUpViewAdd={this.closePopUpViewAdd.bind(this)} geofire={this.props.geofire} firebaseApp={this.props.firebaseApp} markerPointerAddValue={this.state.markerPointerAddValue}/>
         </Animated.View>
       </View>
     )

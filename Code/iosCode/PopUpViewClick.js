@@ -9,6 +9,7 @@ class PopUpViewAdd extends Component {
     super(props);
     this.state = {
       email: '',
+      idPlace: '',
       nameOfThePlace: '',
       thumbsUp: require('../../Images/thumbs-up-white.png'),
       thumsDown: require('../../Images/dislike-thumb-white.png'),
@@ -19,6 +20,7 @@ class PopUpViewAdd extends Component {
       freeChoice: '',
       chosenFreeColor: '#FFA860',
       inverseFreeColor: '#FFA860',
+      itemsRef: this.props.firebaseApp.database()
     }
   }
 
@@ -132,7 +134,7 @@ class PopUpViewAdd extends Component {
       errors = true;
     }
     //Checking if a name is good
-    if (this.state.nameOfThePlace == '') {
+    /*if (this.state.nameOfThePlace == '') {
       Alert.alert(
         'Error',
         'Enter the name of the place !',
@@ -142,9 +144,9 @@ class PopUpViewAdd extends Component {
         { cancelable: false }
       )
       errors = true;
-    }
+    }*/
     //Checking free chosen
-    if (this.state.freeChosen == false) {
+    /*if (this.state.freeChosen == false) {
       Alert.alert(
         'Error',
         'Enter if the restrooms are free or not !',
@@ -154,16 +156,16 @@ class PopUpViewAdd extends Component {
         { cancelable: false }
       )
       errors = true;
-    }
+    }*/
     //Sending the item to the database
     //latitude: 37.78825,
     //longitude: -122.4324,
     if (!errors) {
-      this.props.geofire.set(this.state.nameOfThePlace, [39.78836, -129.4324]).then(function () {
-        console.log("Provided keys have been added to GeoFire");
-      }, function (error) {
-        console.log("Error: " + error);
-      });
+      this.state.itemsRef.ref("voting").push({'-kasdjkfakhsdfkjhaf':{
+        'nameUser': this.state.email,
+        'namePlace': this.state.nameOfThePlace,
+        'positive': this.state.thumbsChoice == 'up' ? 1 :0
+      }})
 
     }
     this.props.closePopUpViewAdd()
