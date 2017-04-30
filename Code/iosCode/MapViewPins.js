@@ -101,8 +101,8 @@ class MapViewPins extends Component {
     );
 
 
-    timer.setInterval('deepshit', () => this.deepShit(), 5000);
-    timer.setInterval('trickedMove', () => this.trickedMove(), 2000)
+    timer.setInterval('deepshit', () => this.deepShit(), 3000);
+    timer.setInterval('trickedMove', () => this.trickedMove(), 1000)
 
   }
 
