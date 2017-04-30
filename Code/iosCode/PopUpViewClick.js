@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, AsyncStorage, Image, TextInput, Dimensions, TouchableHighlight, Alert } from 'react-native';
 import MapView from 'react-native-maps';
 
+var keyGlobal = "";
+
 class PopUpViewAdd extends Component {
 
   constructor(props) {
@@ -20,7 +22,7 @@ class PopUpViewAdd extends Component {
       freeChoice: '',
       chosenFreeColor: '#FFA860',
       inverseFreeColor: '#FFA860',
-      itemsRef: this.props.firebaseApp.database()
+      itemsRef: this.props.firebaseApp.database().ref('/content')
     }
   }
 
@@ -32,23 +34,44 @@ class PopUpViewAdd extends Component {
         email: user.email,
       });
     }
-    var keyGlobal;
+    console.log("!!!!!!!!!"+this.props.region.latitude, this.props.region.longitude);
+    this.getKeyPlace(this.props.region.latitude, this.props.region.longitude);
+    this.findName.bind(this);
+  }
+
+  getKeyPlace(latitude, longitude){
 
     //Find the id of the place through the location geofire
     var geoQuery = this.props.geofire.query({
-      center: [this.props.markerPointerAddValue.latitude, this.props.markerPointerAddValue.longitude],
+      center: [this.props.region.latitude, this.props.region.longitude],
       radius: 0
     });
     geoQuery.on("key_entered", function(key, location, distance) {
+      console.log("getKeyPlace--------"+key)
       keyGlobal = key;
-      console.log(key + " entered query at " + location + " (" + distance + " km from center)");
+      console.log(key + " entered query at " + location + " (" + distance + " km from center)!!!!!!!!!!!!");
     });
 
-    findName(keyGlobal);
+
+    var geoQuery = this.props.geofire.query({
+      center: [this.state.region.latitude, this.state.region.longitude],
+      radius: 3000,
+    });
+    var counter = 3;
+    var variable = geoQuery.on("key_entered", function (key, location, distance) {
+      console.log(key + " entered query at " + location[0] + " (" + distance + " km from center)");
+      keyStorage[counter - 3] = key
+      markersAux[key] = { key: counter, title: 'hello', latlng: { latitude: location[0], longitude: location[1] } }
+      globalCounter++
+      counter++;
+    })
+
   }
 
   findName(key){
+
     var items = [];
+
     this.state.itemsRef.child(key).on('value', (snap) => {
       // get children as an array
       items.push({
@@ -60,7 +83,7 @@ class PopUpViewAdd extends Component {
         _key: snap.key
       });
     });
-    console.log("-------------"+items);
+    console.log("------------- "+items);
   }
 
   //Function to auto update the region on the map
