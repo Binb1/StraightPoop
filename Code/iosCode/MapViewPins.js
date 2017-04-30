@@ -102,7 +102,8 @@ class MapViewPins extends Component {
 
 
     timer.setInterval('deepshit', () => this.deepShit(), 3000);
-    timer.setInterval('trickedMove', () => this.trickedMove(), 1000)
+    timer.setInterval('trickedMove', () => this.trickedMove(), 2000)
+    timer.setInterval('getPins', () => this.geoQueryLauncher(this.state.region.latitude, this.state.region.longitude), 10000)
 
   }
 
