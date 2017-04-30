@@ -5,20 +5,12 @@ var functions = require('firebase-functions');
 //exports.helloWorld = functions.https.onRequest((request, response) => {
 //  response.send("Hello from Firebase!");
 //});
-exports.helloWord = functions.https.onRequest((request, response) => {
-
-})
-
 
 exports.calculateVotes = functions.database
-  .ref('custom/{pushId}')
-  .onWrite(event => {
-    const post = event.data.val()
-    if(post.sanitized){
-      return
-    }
-    post.sanitized = true
-    post.title = sanatize(post.title)
-    post.body = sanatize(post.body)
-    return event.data.ref.set(post)
-  })
+              .ref('custom/${vid}')
+              .onWrite(event =>{
+                const vid = event.params.vid
+                const value = event.data.val().positive
+                const root = event.data.ref.root
+                return root.child('/custom/${pin_id}/positive').once('value')
+              })
