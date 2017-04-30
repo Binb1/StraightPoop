@@ -4,6 +4,7 @@ import MapViewPins from './Code/iosCode/MapViewPins.js'
 import SignIn from './Code/iosCode/SignIn.js'
 import UserPage from './Code/iosCode/UserPage.js'
 import SignUp from './Code/iosCode/SignUp.js'
+import Tutorial from './Code/iosCode/Tutorial.js'
 
 import * as firebase from 'firebase';
 const geofire = require('geofire');
@@ -30,8 +31,9 @@ class StraightPoop extends Component {
 
   renderScene(route, navigator) {
     //Loads the main page
-
-
+    if (route.name == 'Tutorial'){
+      return <Tutorial navigator={navigator} firebaseApp={firebaseApp} />
+    }
     if (route.name == 'MapViewPins'){
       return <MapViewPins navigator={navigator} firebaseApp={firebaseApp} geofire={geofireRef}/>
     }
