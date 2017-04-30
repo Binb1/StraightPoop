@@ -80,12 +80,11 @@ class UserPage extends Component{
           <Image
             style={styles.achievements}
             source={require('../../Images/poop.png')}
-          >
+          />
           <Image
               style={styles.achievements}
               source={require('../../Images/SimpleToilet.png')}
             />
-          </Image>
           </View>
         </View>
        </View>
@@ -108,7 +107,7 @@ const styles = StyleSheet.create({
   top:{
     flex: 1,
     marginTop: 25,
-    marginRight: 300,
+    marginRight: 290,
   },
   arrow: {
     width: 30,
@@ -142,7 +141,7 @@ const styles = StyleSheet.create({
   images:{
     flex: 2,
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
   },
   mail:{
     marginBottom: 4,

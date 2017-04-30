@@ -77,10 +77,7 @@ class MapViewPins extends Component {
       radius: 3.5
     });
 
-    // For every key which matches our GeoQuery...
-    geoQuery.on("key_entered", function(key, location, distance) {
-      console.log(key + " entered query at " + location + " (" + distance + " km from center)");
-    });
+    
 
     //Getting user position
     navigator.geolocation.getCurrentPosition(
@@ -167,7 +164,7 @@ class MapViewPins extends Component {
           shadowRadius: 2,
           shadowOpacity: 0.3
         }}>
-          <PopUpViewAdd bottomViewAdd={this.state.bottomViewAdd} closePopUpViewAdd={this.closePopUpViewAdd.bind(this) } firebaseApp={this.props.firebaseApp} />
+          <PopUpViewAdd bottomViewAdd={this.state.bottomViewAdd} closePopUpViewAdd={this.closePopUpViewAdd.bind(this) } geofire={this.props.geofire} firebaseApp={this.props.firebaseApp} />
         </Animated.View>
       </View>
     )
