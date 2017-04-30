@@ -79,12 +79,16 @@ class UserPage extends Component{
           <View style={styles.images}>
           <Image
             style={styles.achievements}
-            source={require('../../Images/poop.png')}
+            source={require('../../Images/SimpleToilet.png')}
           />
           <Image
               style={styles.achievements}
-              source={require('../../Images/SimpleToilet.png')}
+              source={require('../../Images/poop.png')}
             />
+          </View>
+          <View style={styles.legende}>
+            <Text style={styles.legendeText}>CleanMaster    </Text>
+            <Text style={styles.legendeText}>    PoopMaster</Text>
           </View>
         </View>
        </View>
@@ -134,14 +138,24 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   bottonText:{
+    flex: 0.8,
     marginLeft: 8,
     textAlign: 'center',
     marginTop: 12,
   },
   images:{
-    flex: 2,
+    flex: 1.4,
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  legende:{
+    flex: 0.8,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  legendeText:{
+
+    marginBottom: 5,
   },
   mail:{
     marginBottom: 4,
@@ -155,14 +169,11 @@ const styles = StyleSheet.create({
   },
   achievements:{
     overlayColor: 'gray',
-    width: 30,
-    height: 30,
-    marginBottom: 5,
-  },
-  descriptionUnderline: {
-    fontSize: 20,
-    textDecorationLine: 'underline',
-    fontFamily: 'Avenir'
+    width: 50,
+    height: 50,
+    marginTop: 8,
+    marginLeft: 22,
+    marginRight: 22,
   },
   inputBox: {
     minHeight: 40,
