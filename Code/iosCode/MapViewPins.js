@@ -189,7 +189,7 @@ class MapViewPins extends Component {
           shadowRadius: 2,
           shadowOpacity: 0.3
         }}>
-          <PopUpViewClick closePopUpViewAdd={this.closePopUpViewAdd.bind(this)} geofire={this.props.geofire} firebaseApp={this.props.firebaseApp} />
+          <PopUpViewClick closePopUpViewAdd={this.closePopUpViewClick.bind(this)} geofire={this.props.geofire} firebaseApp={this.props.firebaseApp} />
         </Animated.View>
       </View>
     )
@@ -209,6 +209,12 @@ class MapViewPins extends Component {
       addingPin: false,
       markerPointerAddValue: this.state.markerPointerAddValue,
       markerPointerAdd: northPole
+    })
+  }
+
+  closePopUpViewClick(){
+    this.setState({
+      bottomViewClick: -200,
     })
   }
 
