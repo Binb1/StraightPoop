@@ -34,12 +34,9 @@ class PopUpViewAdd extends Component {
         email: user.email,
       });
     }
-    console.log("!!!!!!!!!"+this.props.region.latitude, this.props.region.longitude);
-    this.getKeyPlace(this.props.region.latitude, this.props.region.longitude);
-    this.findName.bind(this);
   }
 
-  getKeyPlace(latitude, longitude){
+  /*getKeyPlace(latitude, longitude){
 
     //Find the id of the place through the location geofire
     var geoQuery = this.props.geofire.query({
@@ -51,21 +48,6 @@ class PopUpViewAdd extends Component {
       keyGlobal = key;
       console.log(key + " entered query at " + location + " (" + distance + " km from center)!!!!!!!!!!!!");
     });
-
-
-    var geoQuery = this.props.geofire.query({
-      center: [this.state.region.latitude, this.state.region.longitude],
-      radius: 3000,
-    });
-    var counter = 3;
-    var variable = geoQuery.on("key_entered", function (key, location, distance) {
-      console.log(key + " entered query at " + location[0] + " (" + distance + " km from center)");
-      keyStorage[counter - 3] = key
-      markersAux[key] = { key: counter, title: 'hello', latlng: { latitude: location[0], longitude: location[1] } }
-      globalCounter++
-      counter++;
-    })
-
   }
 
   findName(key){
@@ -84,7 +66,7 @@ class PopUpViewAdd extends Component {
       });
     });
     console.log("------------- "+items);
-  }
+  }*/
 
   //Function to auto update the region on the map
   onRegionChange(region) {

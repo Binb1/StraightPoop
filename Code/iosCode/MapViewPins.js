@@ -24,6 +24,7 @@ var markersAux = [
 ]
 var markers = []
 var keyStorage = []
+var displayPressed = false
 
 
 class MapViewPins extends Component {
@@ -136,17 +137,20 @@ class MapViewPins extends Component {
     var items = [];
     console.log(keyStorage.length)
     for (var j = 0; j < keyStorage.length; j++) {
-      this.state.itemsRef.child(keyStorage[j]).on('value', (snap) => {
-        // get children as an array
-        items.push({
-          name: snap.val().name,
-          grade: snap.val().grade,
-          negative: snap.val().negative,
-          positive: snap.val().positive,
-          pay: snap.val().pay,
-          _key: snap.key
+      if(keyStorage[j] != null){
+        this.state.itemsRef.child(keyStorage[j]).on('value', (snap) => {
+          // get children as an array
+          items.push({
+            name: snap.val().name,
+            grade: snap.val().grade,
+            negative: snap.val().negative,
+            positive: snap.val().positive,
+            pay: snap.val().pay,
+            _key: snap.key
+          });
         });
-      });
+      }
+
     }
     console.log(items)
     console.log(globalCounter)
