@@ -32,10 +32,36 @@ class PopUpViewAdd extends Component {
         email: user.email,
       });
     }
+    var keyGlobal;
+
+    //Find the id of the place through the location geofire
+    var geoQuery = this.props.geofire.query({
+      center: [this.props.markerPointerAddValue.latitude, this.props.markerPointerAddValue.longitude],
+      radius: 0
+    });
+    geoQuery.on("key_entered", function(key, location, distance) {
+      keyGlobal = key;
+      console.log(key + " entered query at " + location + " (" + distance + " km from center)");
+    });
+
+    findName(keyGlobal);
   }
 
-
-
+  findName(key){
+    var items = [];
+    this.state.itemsRef.child(key).on('value', (snap) => {
+      // get children as an array
+      items.push({
+        name: snap.val().name,
+        grade: snap.val().grade,
+        negative: snap.val().negative,
+        positive: snap.val().positive,
+        pay: snap.val().pay,
+        _key: snap.key
+      });
+    });
+    console.log("-------------"+items);
+  }
 
   //Function to auto update the region on the map
   onRegionChange(region) {

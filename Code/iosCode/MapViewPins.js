@@ -144,7 +144,6 @@ class MapViewPins extends Component {
         called = true
       }
     }
-
   }
 
   rightImage(items){
@@ -178,29 +177,6 @@ class MapViewPins extends Component {
       this.deepShit()
     }
   }
-
-<<<<<<< HEAD
-  listenForItems(itemsRef) {
-    console.log("+++++++++" + itemsRef.child("-Kix6SdTzZrj4bS9tV0q"))
-		itemsRef.child('-Kix6SdTzZrj4bS9tV0q').on('value', (snap) => {
-			// get children as an array
-			var items = [];
-				items.push({
-					name: snap.val().name,
-					grade: snap.val().grade,
-					negative: snap.val().negative,
-					positive: snap.val().positive,
-          pay: snap.val().pay,
-					_key: snap.key
-				});
-      console.log("dsadsa", items)
-=======
->>>>>>> origin/master
-
-
-
-
-
 
   render() {
     console.log('region', this.state.region)
