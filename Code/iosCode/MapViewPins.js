@@ -213,7 +213,6 @@ class MapViewPins extends Component {
               onPress={() => this.displayPopUpClick()}
               coordinate={marker.latlng}
               image={marker.image}
-              style={styles.marker}
               key={marker.key}
             />
           ))}

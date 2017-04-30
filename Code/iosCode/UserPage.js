@@ -74,8 +74,8 @@ class UserPage extends Component{
           </TouchableOpacity>
         </View>
         <View style={styles.bottom}>
-          <Text style={styles.bottonText}>You have reviewed COUNTER restrooms! {"\n"}
-          Your next achievement is in VALUE reviews! {"\n"}</Text>
+          <Text style={styles.bottonText}>You have reviewed 3 restrooms! {"\n"}
+          Your next achievement is in 7 reviews! {"\n"}</Text>
           <View style={styles.images}>
           <Image
             style={styles.achievements}
