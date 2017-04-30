@@ -18,13 +18,11 @@ class Tutorial extends Component {
         <View style={style.tutorial}>
           <View style={style.line}>
             <View style={style.imgbox}>
-              <Image style={style.pin} source={require("../../Images/Red.png")}>
-
-                <Image
-                  style={style.pin2}
-                  source={require("../../Images/Green.png")}
-                />
-              </Image>
+              <Image style={style.pin} source={require("../../Images/Red.png")} />
+              <Image
+                style={style.pin2}
+                source={require("../../Images/Green.png")}
+              />
             </View>
 
             <View style={style.textbox}>
@@ -38,12 +36,11 @@ class Tutorial extends Component {
               <Image
                 style={style.pin}
                 source={require("../../Images/RedMoney.png")}
-              >
-                <Image
-                  style={style.pin2}
-                  source={require("../../Images/GreenMoney.png")}
-                />
-              </Image>
+              />
+              <Image
+                style={style.pin2}
+                source={require("../../Images/GreenMoney.png")}
+              />
             </View>
 
             <View style={style.textbox}>
@@ -57,12 +54,11 @@ class Tutorial extends Component {
               <Image
                 style={style.pin}
                 source={require("../../Images/YellowMoney.png")}
-              >
-                <Image
-                  style={style.pin2}
-                  source={require("../../Images/Yellow.png")}
-                />
-              </Image>
+              />
+              <Image
+                style={style.pin2}
+                source={require("../../Images/Yellow.png")}
+              />
             </View>
 
             <View style={style.textbox}>
@@ -84,7 +80,7 @@ class Tutorial extends Component {
               </Text>
             </View>
           </View>
-          <View style={{ height: 75, marginBottom: 50 }}>
+          <View style={{ height: 75, marginBottom: 10 }}>
             <TouchableHighlight
               style={style.th}
               onPress={this._GoToMain.bind(this)}
@@ -121,15 +117,16 @@ const style = new StyleSheet.create({
   },
   button: {
     fontSize: 25,
+    color: 'white',
     textAlign: "center"
   },
   text: {
-    fontSize: 24,
-    fontWeight: "bold",
+    fontSize: 20,
+    fontWeight: "300",
   },
   imgbox: {
-    width: 100,
-    marginLeft: 20
+    width: 120,
+    marginLeft: 5,
   },
   textbox: {
     marginRight: 7,
@@ -138,18 +135,19 @@ const style = new StyleSheet.create({
     flexWrap: "wrap"
   },
   pin: {
-    marginLeft: 20,
-    width: 75,
-    height: 75
+    marginLeft: -10,
+    width: 80,
+    height: 80
   },
   pin2: {
-    marginLeft: -30,
-    width: 75,
-    height: 75
+    position: 'absolute',
+    width: 80,
+    height: 80,
+    left: 30
   },
   pin3: {
-    width: 75,
-    height: 75
+    width: 80,
+    height: 80
   },
   line: {
     marginTop: 40,
@@ -161,7 +159,7 @@ const style = new StyleSheet.create({
     backgroundColor: "white",
     flex: 1,
     borderRadius: 10,
-    marginTop: 25,
+    marginTop: 20,
     marginBottom: 20,
   }
 });
