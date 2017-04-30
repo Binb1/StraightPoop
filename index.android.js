@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry,StyleSheet,Text,View, Navigator } from 'react-native';
+import { AppRegistry,StyleSheet,Text,View, Navigator, AsyncStorage } from 'react-native';
 import MapViewPins from './Code/iosCode/MapViewPins.js'
 import SignIn from './Code/iosCode/SignIn.js'
 import UserPage from './Code/iosCode/UserPage.js'
@@ -7,22 +7,23 @@ import SignUp from './Code/iosCode/SignUp.js'
 import Tutorial from './Code/iosCode/Tutorial.js'
 
 import * as firebase from 'firebase';
+const geofire = require('geofire');
 
 //Initiaizing firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyDUZjvISVXl1Xl64PaDU2Zi0uRn6jdG9gA",
-  authDomain: "gofu-9c8fb.firebaseio.com",
-  databaseURL: "https://gofu-9c8fb.firebaseio.com/",
+  apiKey: "AIzaSyDiLxHPhf_sMM93ukyBdXQQQTnNx6XstOw",
+  authDomain: "straightpoop-9f9d6.firebaseio.com",
+  databaseURL: "https://straightpoop-9f9d6.firebaseio.com/",
 };
 const firebaseApp = firebase.initializeApp(firebaseConfig);
+const geofireRef = new geofire(firebaseApp.database().ref('location'));
 
-export default class StraightPoop extends Component {
-
+class StraightPoop extends Component {
   render() {
     return (
       <Navigator
         style={{ flex: 1 }}
-        initialRoute={{ name: 'Tutorial' }}
+        initialRoute={{ name: 'SignIn' }}
         renderScene={this.renderScene.bind(this)}
       />
     )
@@ -30,7 +31,7 @@ export default class StraightPoop extends Component {
 
   renderScene(route, navigator) {
     //Loads the main page
-     if (route.name == 'Tutorial'){
+    if (route.name == 'Tutorial'){
       return <Tutorial navigator={navigator} firebaseApp={firebaseApp} />
     }
     if (route.name == 'MapViewPins'){
@@ -46,6 +47,8 @@ export default class StraightPoop extends Component {
       return <SignUp navigator={navigator} firebaseApp={firebaseApp}/>
     }
   }
+
+
 }
 
 const styles = StyleSheet.create({
@@ -68,4 +71,3 @@ const styles = StyleSheet.create({
 
 
 AppRegistry.registerComponent('StraightPoop', () => StraightPoop);
-

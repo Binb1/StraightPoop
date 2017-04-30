@@ -339,7 +339,7 @@ const styles = new StyleSheet.create({
   },
   profile: {
     position: 'absolute',
-    top: 40,
+    top: 60,
     right: 20
   },
   plusButton: {
