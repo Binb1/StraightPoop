@@ -11,17 +11,14 @@ var northPole = {
   longitudeDelta: 0.0421,
 }
 
+globalCounter = 0
+called = false
+
 var markersBis = [];
-var markers = [
-  {
-    key: 1,
-    title: 'hello',
-    latlng: {
-      latitude: 37.78825,
-      longitude: -122.4324
-    },
-  },
+var markersAux = [
+
 ]
+var markers = []
 var keyStorage = []
 
 
@@ -83,7 +80,9 @@ class MapViewPins extends Component {
       });
     }
 
-    this.listenForItems(this.state.itemsRef)
+
+
+
 
     //Getting user position
     navigator.geolocation.getCurrentPosition(
@@ -111,12 +110,57 @@ class MapViewPins extends Component {
     var variable = geoQuery.on("key_entered", function (key, location, distance) {
       console.log(key + " entered query at " + location[0] + " (" + distance + " km from center)");
       keyStorage[counter - 3] = key
-      markers.push({ key: counter, title: 'hello', latlng: { latitude: location[0], longitude: location[1] } }, );
+      markersAux[key] = { key: counter, title: 'hello', latlng: { latitude: location[0], longitude: location[1] } }
+      globalCounter++
       counter++;
     })
   }
   //We will have to retrieve the information from the database.
 
+  deepShit() {
+
+    var items = [];
+    console.log(keyStorage.length)
+    for (var j = 0; j < keyStorage.length; j++) {
+      this.state.itemsRef.child(keyStorage[j]).on('value', (snap) => {
+        // get children as an array
+        items.push({
+          name: snap.val().name,
+          grade: snap.val().grade,
+          negative: snap.val().negative,
+          positive: snap.val().positive,
+          pay: snap.val().pay,
+          _key: snap.key
+        });
+      });
+    }
+    console.log('dsadsa', items)
+    console.log('ewqeqw', globalCounter)
+
+    if (items.length > 0) {
+      for (var i = 0; i < items.length; i++) {
+        markers.push({ key: items[i]._key, title: 'hello', latlng: markersAux[items[i]._key].latlng, image: this.rightImage(items[i]) })
+        console.log('ewqjieqwjieoqwjioeqwjieqw', markers)
+        called = true
+      }
+    }
+
+  }
+
+  rightImage(items){
+    if (items.pay && items.positive >= items.negative){
+      return require('../../Images/GreenMoney.png')
+    }
+    if (!items.pay && items.positive >= items.negative){
+      return require('../../Images/Green.png')
+    }
+    if (items.pay && items.positive < items.negative){
+      return require('../../Images/RedMoney.png')
+    }
+    if (!items.pay && items.positive < items.negative){
+      return require('../../Images/Red.png')
+    }
+  }
 
 
 
@@ -130,30 +174,14 @@ class MapViewPins extends Component {
         markerPointerAdd: region
       })
     }
-    for (var i = 0; i < keyStorage.length; i++) {
-
-
+    if (!called) {
+      this.deepShit()
     }
   }
 
-  listenForItems(itemsRef) {
-		itemsRef.on('value', (snap) => {
-			// get children as an array
-			var items = [];
-			snap.key('-Kix6SdTzZrj4bS9tV0q').forEach((child) => {
-				items.push({
-					name: child.val().name,
-					grade: child.val().grade,
-					negative: child.val().negative,
-					positive: child.val().positive,
-          pay: child.val().pay,
-					_key: child.key
-				});
-			});
-      console.log("dsadsa", items)
 
-		});
-	}
+
+
 
 
 
@@ -173,6 +201,8 @@ class MapViewPins extends Component {
               onPress={() => this.displayPopUpClick()}
               coordinate={marker.latlng}
               title={marker.title}
+              image={marker.image}
+              style={styles.marker}
               key={marker.key}
             />
           ))}
@@ -322,7 +352,11 @@ const styles = new StyleSheet.create({
     },
     shadowRadius: 0.5,
     shadowOpacity: 1.0
-  }
+  },
+  marker: {
+        width: 60,
+        height: 75
+    }
 })
 
 export default MapViewPins;
