@@ -139,7 +139,7 @@ class MapViewPins extends Component {
 
     if (items.length > 0) {
       for (var i = 0; i < items.length; i++) {
-        markers.push({ key: items[i]._key, title: 'hello', latlng: markersAux[items[i]._key].latlng, image: this.rightImage(items[i]) })
+        markers.push({ key: items[i]._key, latlng: markersAux[items[i]._key].latlng, image: this.rightImage(items[i]) })
         console.log('ewqjieqwjieoqwjioeqwjieqw', markers)
         called = true
       }
@@ -155,10 +155,10 @@ class MapViewPins extends Component {
       return require('../../Images/Green.png')
     }
     if (items.pay && items.positive < items.negative){
-      return require('../../Images/RedMoney.png')
+      return require('../../Images/RedOne.png')
     }
     if (!items.pay && items.positive < items.negative){
-      return require('../../Images/Red.png')
+      return require('../../Images/RedOne.png')
     }
   }
 
@@ -200,7 +200,6 @@ class MapViewPins extends Component {
             <MapView.Marker
               onPress={() => this.displayPopUpClick()}
               coordinate={marker.latlng}
-              title={marker.title}
               image={marker.image}
               style={styles.marker}
               key={marker.key}
