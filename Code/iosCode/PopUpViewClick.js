@@ -32,9 +32,7 @@ class PopUpViewAdd extends Component {
     }
   }
 
-  componentDidMount() {
 
-  }
 
 
   //Function to auto update the region on the map
@@ -47,9 +45,9 @@ class PopUpViewAdd extends Component {
   render() {
     return (
       <View style={{ flex: 3 }}>
-        <View style={{flex: 0.6}}>
+        <View style={{flex: 0.6, alignItems: 'center', justifyContent: 'center'}}>
         <Text
-          style={{}}>
+          style={{color: 'white', fontSize: 35, fontWeight: '400'}}>
           name
          </Text>
          </View>
