@@ -14,7 +14,8 @@ class PopUpViewAdd extends Component {
       thumsDown: require('../../Images/dislike-thumb-white.png'),
       thumbsChosen: false,
       thumbsChoice: '',
-      bottomViewAdd: this.props.bottomViewAdd
+      bottomViewAdd: this.props.bottomViewAdd,
+      itemsRef: this.props.firebaseApp.database(),
     }
   }
 
@@ -125,14 +126,22 @@ class PopUpViewAdd extends Component {
     //Sending the item to the database
     //latitude: 37.78825,
     //longitude: -122.4324,
+
+
+    this.state.itemsRef.ref("custom").push({'name': this.state.nameOfThePlace, 'positive': this.state.thumbsChoice == 'up' ? 1 :0, 'negative': this.state.thumbsChoice == 'up' ? 0 :1  });
+    /*this.props.geoQuery.on("key_entered", function(key, location, distance) {
+      console.log(key + " entered query at " + location + " (" + distance + " km from center)");
+    });
     if(!errors){
       this.props.geofire.set(this.state.nameOfThePlace,[39.78836, -129.4324]).then(function() {
         console.log("Provided keys have been added to GeoFire");
       }, function(error) {
         console.log("Error: " + error);
-      });
+      });*/
 
-    }
+
+
+
     this.props.closePopUpViewAdd()
 
     //Reseting the field
