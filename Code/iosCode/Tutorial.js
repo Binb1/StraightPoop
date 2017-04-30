@@ -21,10 +21,10 @@ class Tutorial extends Component {
         <StatusBar translucent backgroundColor="rgba(255,255,255,0)" />
         <View style={style.tutorial}>
           <View style={style.line}>
-            <Image style={style.pin} source={require("../../Markers/Red.png")}>
+            <Image style={style.pin} source={require("../../Images/Red.png")}>
               <Image
                 style={style.pin2}
-                source={require("../../Markers/Green.png")}
+                source={require("../../Images/Green.png")}
               />
             </Image>
             <View style={style.textbox}>
@@ -36,11 +36,11 @@ class Tutorial extends Component {
           <View style={style.line}>
             <Image
               style={style.pin}
-              source={require("../../Markers/RedMoney.png")}
+              source={require("../../Images/RedMoney.png")}
             >
               <Image
                 style={style.pin2}
-                source={require("../../Markers/GreenMoney.png")}
+                source={require("../../Images/GreenMoney.png")}
               />
             </Image>
             <View style={style.textbox}>
@@ -52,11 +52,11 @@ class Tutorial extends Component {
           <View style={style.line}>
             <Image
               style={style.pin}
-              source={require("../../Markers/YellowMoney.png")}
+              source={require("../../Images/YellowMoney.png")}
             >
               <Image
                 style={style.pin2}
-                source={require("../../Markers/Yellow.png")}
+                source={require("../../Images/Yellow.png")}
               />
             </Image>
             <View style={style.textbox}>
