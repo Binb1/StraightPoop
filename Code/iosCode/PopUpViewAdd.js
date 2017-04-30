@@ -120,7 +120,7 @@ class PopUpViewAdd extends Component {
       chosenFreeColor: 'green',
       inverseFreeColor: '#FFA860',
       freeChosen: true,
-      freeChoice: 'yes'
+      freeChoice: false
     })
   }
 
@@ -129,7 +129,7 @@ class PopUpViewAdd extends Component {
       chosenFreeColor: '#FFA860',
       inverseFreeColor: 'green',
       freeChosen: true,
-      freeChoice: 'no'
+      freeChoice: true
     })
   }
 
@@ -180,7 +180,7 @@ class PopUpViewAdd extends Component {
       'positive': this.state.thumbsChoice == 'up' ? 1 :0,
       'negative': this.state.thumbsChoice == 'up' ? 0 :1,
       'grade': this.state.thumbsChoice == 'up' ? 1.0 :0.0,
-      'pay': false,
+      'pay': this.state.freeChoice,
       'pinType': 'Green'}).key;
 
 
@@ -189,23 +189,6 @@ class PopUpViewAdd extends Component {
       }, function(error) {
         console.log("Error: " + error);
       });
-
-
-    /*this.props.geoQuery.on("key_entered", function(key, location, distance) {
-      console.log(key + " entered query at " + location + " (" + distance + " km from center)");
-    });
-    if(!errors){
-      this.props.geofire.set(this.state.nameOfThePlace,[39.78836, -129.4324]).then(function() {
-=======
-    if (!errors) {
-      this.props.geofire.set(this.state.nameOfThePlace, [39.78836, -129.4324]).then(function () {
->>>>>>> origin/master
-        console.log("Provided keys have been added to GeoFire");
-      }, function (error) {
-        console.log("Error: " + error);
-      });*/
-
-
 
 
     this.props.closePopUpViewAdd()

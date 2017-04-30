@@ -4,6 +4,10 @@ import MapView from 'react-native-maps';
 import PopUpViewAdd from './PopUpViewAdd.js'
 import PopUpViewClick from './PopUpViewClick.js'
 
+const timer = require('react-native-timer');
+
+
+
 var northPole = {
   latitude: -90,
   longitude: -180,
@@ -67,7 +71,6 @@ class MapViewPins extends Component {
     })
   }
 
-
   componentDidMount() {
     //Getting user infos
     var user = this.props.firebaseApp.auth().currentUser;
@@ -79,9 +82,6 @@ class MapViewPins extends Component {
         email: user.email,
       });
     }
-
-
-
 
 
     //Getting user position
@@ -99,6 +99,10 @@ class MapViewPins extends Component {
       (error) => alert(error.message),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
+
+
+
+
   }
 
   geoQueryLauncher(latitude, longitude) {
@@ -134,30 +138,30 @@ class MapViewPins extends Component {
         });
       });
     }
-    console.log('dsadsa', items)
-    console.log('ewqeqw', globalCounter)
+    console.log(items)
+    console.log(globalCounter)
 
     if (items.length > 0) {
       for (var i = 0; i < items.length; i++) {
-        markers.push({ key: items[i]._key, title: 'hello', latlng: markersAux[items[i]._key].latlng, image: this.rightImage(items[i]) })
-        console.log('ewqjieqwjieoqwjioeqwjieqw', markers)
+        markers.push({ key: items[i]._key, latlng: markersAux[items[i]._key].latlng, image: this.rightImage(items[i]) })
+        console.log(markers)
         called = true
       }
     }
   }
 
-  rightImage(items){
-    if (items.pay && items.positive >= items.negative){
+  rightImage(items) {
+    if (items.pay && items.positive >= items.negative) {
       return require('../../Images/GreenMoney.png')
     }
-    if (!items.pay && items.positive >= items.negative){
+    if (!items.pay && items.positive >= items.negative) {
       return require('../../Images/Green.png')
     }
-    if (items.pay && items.positive < items.negative){
+    if (items.pay && items.positive < items.negative) {
       return require('../../Images/RedMoney.png')
     }
-    if (!items.pay && items.positive < items.negative){
-      return require('../../Images/Red.png')
+    if (!items.pay && items.positive < items.negative) {
+      return require('../../Images/red1.png')
     }
   }
 
@@ -193,7 +197,6 @@ class MapViewPins extends Component {
             <MapView.Marker
               onPress={() => this.displayPopUpClick()}
               coordinate={marker.latlng}
-              title={marker.title}
               image={marker.image}
               style={styles.marker}
               key={marker.key}
@@ -261,7 +264,7 @@ class MapViewPins extends Component {
           shadowRadius: 2,
           shadowOpacity: 0.3
         }}>
-          <PopUpViewClick closePopUpViewAdd={this.closePopUpViewAdd.bind(this)} geofire={this.props.geofire} firebaseApp={this.props.firebaseApp} markerPointerAddValue={this.state.markerPointerAddValue} />
+          <PopUpViewClick closePopUpViewAdd={this.closePopUpViewClick.bind(this)} geofire={this.props.geofire} firebaseApp={this.props.firebaseApp} markerPointerAddValue={this.state.markerPointerAddValue} />
         </Animated.View>
       </View>
     )
@@ -347,9 +350,9 @@ const styles = new StyleSheet.create({
     shadowOpacity: 1.0
   },
   marker: {
-        width: 60,
-        height: 75
-    }
+    width: 60,
+    height: 75
+  }
 })
 
 export default MapViewPins;
