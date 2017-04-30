@@ -80,11 +80,12 @@ class UserPage extends Component{
           <Image
             style={styles.achievements}
             source={require('../../Images/poop.png')}
-          />
+          >
           <Image
               style={styles.achievements}
               source={require('../../Images/SimpleToilet.png')}
             />
+          </Image>
           </View>
         </View>
        </View>
