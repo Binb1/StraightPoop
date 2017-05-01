@@ -36,37 +36,6 @@ class PopUpViewAdd extends Component {
     }
   }
 
-  /*getKeyPlace(latitude, longitude){
-
-    //Find the id of the place through the location geofire
-    var geoQuery = this.props.geofire.query({
-      center: [this.props.region.latitude, this.props.region.longitude],
-      radius: 0
-    });
-    geoQuery.on("key_entered", function(key, location, distance) {
-      console.log("getKeyPlace--------"+key)
-      keyGlobal = key;
-      console.log(key + " entered query at " + location + " (" + distance + " km from center)!!!!!!!!!!!!");
-    });
-  }
-
-  findName(key){
-
-    var items = [];
-
-    this.state.itemsRef.child(key).on('value', (snap) => {
-      // get children as an array
-      items.push({
-        name: snap.val().name,
-        grade: snap.val().grade,
-        negative: snap.val().negative,
-        positive: snap.val().positive,
-        pay: snap.val().pay,
-        _key: snap.key
-      });
-    });
-    console.log("------------- "+items);
-  }*/
 
   //Function to auto update the region on the map
   onRegionChange(region) {

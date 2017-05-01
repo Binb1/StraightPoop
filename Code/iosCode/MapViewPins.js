@@ -108,36 +108,82 @@ class MapViewPins extends Component {
 
   }
 
-  geoQueryLauncher(latitude, longitude) {
-    var geoQuery = this.props.geofire.query({
-      center: [this.state.region.latitude, this.state.region.longitude],
-      radius: 3000,
-    });
-    var counter = 3;
-    keyStorage = []
-    markersAux = []
-    var variable = geoQuery.on("key_entered", function (key, location, distance) {
-      console.log(key + " entered query at " + location[0] + " (" + distance + " km from center)");
-      keyStorage[counter - 3] = key
-      markersAux[key] = { key: counter, title: 'hello', latlng: { latitude: location[0], longitude: location[1] } }
-      globalCounter++
-      counter++;
-    })
-  }
-  //We will have to retrieve the information from the database.
 
-  trickedMove() {
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <MapView
+          style={styles.map}
+          initialRegion={this.state.region}
+          region={this.state.region}
+          onRegionChange={this.onRegionChange.bind(this)}>
+
+          {markers.map(marker => (
+            <MapView.Marker
+              onPress={() => this.displayPopUpClick()}
+              coordinate={marker.latlng}
+              image={marker.image}
+              key={marker.key}
+            />
+          ))}
+          <MapView.Marker
+            coordinate={this.state.userPosition}
+          />
+          <MapView.Marker
+            coordinate={this.state.markerPointerAdd}
+            pinColor={'blue'}
+          />
+        </MapView>
+        <TouchableOpacity onPress={() => this.plusPressed()} style={styles.plus}>
+          <Image
+            style={styles.plusButton}
+            source={require('../../Images/plus.png')}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={this._navigateToProfile.bind(this)} style={styles.profile}>
+          <Image
+            style={styles.profilePage}
+            source={require('../../Images/profilePage.png')}
+          />
+        </TouchableOpacity>
+        <Animated.View style={{
+          height: 250, borderWidth: 3, borderColor: 'white', borderRadius: 10, position: 'absolute', left: 10, right: 10, bottom: this.state.bottomViewAdd,
+          backgroundColor: '#FFA860', shadowColor: '#999999', shadowOffset: { width: 0, height: 3 }, shadowRadius: 2, shadowOpacity: 0.3
+        }}>
+          <PopUpViewAdd bottomViewAdd={this.state.bottomViewAdd} closePopUpViewAdd={this.closePopUpViewAdd.bind(this)} geofire={this.props.geofire} firebaseApp={this.props.firebaseApp} markerPointerAddValue={this.state.markerPointerAdd} />
+        </Animated.View>
+        <Animated.View style={{
+          height: 200, borderWidth: 3, borderColor: 'white', borderRadius: 10, position: 'absolute', left: 10, right: 10, bottom: this.state.bottomViewClick,
+          backgroundColor: '#FFA860', shadowColor: '#999999', shadowOffset: { width: 0, height: 3 }, shadowRadius: 2, shadowOpacity: 0.3
+        }}>
+          <PopUpViewClick closePopUpViewAdd={this.closePopUpViewClick.bind(this)} geofire={this.props.geofire} firebaseApp={this.props.firebaseApp} region={this.state.region} />
+        </Animated.View>
+      </View>
+    )
+  }
+
+  //Function to auto update the region on the map
+  onRegionChange(region) {
     this.setState({
-      region: this.state.region
-    })
+      region,
+    });
+    if (this.state.addingPin == true) {
+      this.setState({
+        markerPointerAdd: region
+      })
+    }
+    if (!called) {
+      this.deepShit()
+    }
   }
 
+  //Crazy function - Does a big part of the job to display pins
   deepShit() {
-    console.log("CALLED")
     var items = [];
     console.log(keyStorage.length)
     for (var j = 0; j < keyStorage.length; j++) {
-      if(keyStorage[j] != null){
+      if (keyStorage[j] != null) {
         this.state.itemsRef.child(keyStorage[j]).on('value', (snap) => {
           // get children as an array
           items.push({
@@ -165,6 +211,65 @@ class MapViewPins extends Component {
     }
   }
 
+  //How to trick users
+  trickedMove() {
+    this.setState({
+      region: this.state.region
+    })
+  }
+
+  //Other crazy function, called to get the pins from the database
+  geoQueryLauncher(latitude, longitude) {
+    var geoQuery = this.props.geofire.query({
+      center: [this.state.region.latitude, this.state.region.longitude],
+      radius: 3000,
+    });
+    var counter = 3;
+    keyStorage = []
+    markersAux = []
+    var variable = geoQuery.on("key_entered", function (key, location, distance) {
+      console.log(key + " entered query at " + location[0] + " (" + distance + " km from center)");
+      keyStorage[counter - 3] = key
+      markersAux[key] = { key: counter, title: 'hello', latlng: { latitude: location[0], longitude: location[1] } }
+      globalCounter++
+      counter++;
+    })
+  }
+
+  //Function called when plus button is clicked
+  plusPressed() {
+    this.setState({
+      bottomViewAdd: 40,
+      addingPin: true,
+      markerPointerAdd: this.state.userPosition
+    })
+  }
+
+  //Func called when close is clicked on the Add popup 
+  closePopUpViewAdd() {
+    this.setState({
+      bottomViewAdd: -250,
+      addingPin: false,
+      markerPointerAddValue: this.state.markerPointerAddValue,
+      markerPointerAdd: northPole
+    })
+  }
+
+  //Func called when close is called on the Rating popup
+  closePopUpViewClick() {
+    this.setState({
+      bottomViewClick: -200,
+    })
+  }
+
+  //Func called when click on a pin
+  displayPopUpClick() {
+    this.setState({
+      bottomViewClick: 40
+    })
+  }
+
+  //Function used to determine which pin to display
   rightImage(items) {
     if (items.pay && items.positive >= items.negative) {
       return require('../../Images/GreenMoney.png')
@@ -178,139 +283,6 @@ class MapViewPins extends Component {
     if (!items.pay && items.positive < items.negative) {
       return require('../../Images/red1.png')
     }
-  }
-
-
-
-  //Function to auto update the region on the map
-  onRegionChange(region) {
-    this.setState({
-      region,
-    });
-    if (this.state.addingPin == true) {
-      this.setState({
-        markerPointerAdd: region
-      })
-    }
-    if (!called) {
-      this.deepShit()
-    }
-  }
-
-  render() {
-    console.log('region', this.state.region)
-    console.log('userPosition', this.state.markerPointerAddValue)
-    return (
-      <View style={styles.container}>
-        <MapView
-          style={styles.map}
-          initialRegion={this.state.region}
-          region={this.state.region}
-          onRegionChange={this.onRegionChange.bind(this)}>
-
-          {markers.map(marker => (
-            <MapView.Marker
-              onPress={() => this.displayPopUpClick()}
-              coordinate={marker.latlng}
-              image={marker.image}
-              key={marker.key}
-            />
-          ))}
-          <MapView.Marker
-            coordinate={this.state.userPosition}
-          />
-          <MapView.Marker
-            coordinate={this.state.markerPointerAdd}
-            pinColor={'blue'}
-          />
-        </MapView>
-
-        <TouchableOpacity onPress={() => this.plusPressed()} style={styles.plus}>
-          <Image
-            style={styles.plusButton}
-            source={require('../../Images/plus.png')}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this._navigateToProfile.bind(this)} style={styles.profile}>
-          <Image
-            style={styles.profilePage}
-            source={require('../../Images/profilePage.png')}
-          />
-        </TouchableOpacity>
-        <Animated.View style={{
-          flex: 4,
-          height: 250,
-          borderWidth: 3,
-          borderColor: 'white',
-          borderRadius: 10,
-          position: 'absolute',
-          left: 10,
-          right: 10,
-          bottom: this.state.bottomViewAdd,
-          backgroundColor: '#FFA860',
-          shadowColor: '#999999',
-          shadowOffset: {
-            width: 0,
-            height: 3
-          },
-          shadowRadius: 2,
-          shadowOpacity: 0.3
-        }}>
-          <PopUpViewAdd bottomViewAdd={this.state.bottomViewAdd} closePopUpViewAdd={this.closePopUpViewAdd.bind(this)} geofire={this.props.geofire} firebaseApp={this.props.firebaseApp} markerPointerAddValue={this.state.markerPointerAdd} />
-        </Animated.View>
-
-        <Animated.View style={{
-          flex: 3,
-          height: 200,
-          borderWidth: 3,
-          borderColor: 'white',
-          borderRadius: 10,
-          position: 'absolute',
-          left: 10,
-          right: 10,
-          bottom: this.state.bottomViewClick,
-          backgroundColor: '#FFA860',
-          shadowColor: '#999999',
-          shadowOffset: {
-            width: 0,
-            height: 3
-          },
-          shadowRadius: 2,
-          shadowOpacity: 0.3
-        }}>
-          <PopUpViewClick closePopUpViewAdd={this.closePopUpViewClick.bind(this)} geofire={this.props.geofire} firebaseApp={this.props.firebaseApp} region={this.state.region} />
-        </Animated.View>
-      </View>
-    )
-  }
-
-  plusPressed() {
-    this.setState({
-      bottomViewAdd: 40,
-      addingPin: true,
-      markerPointerAdd: this.state.userPosition
-    })
-  }
-
-  closePopUpViewAdd() {
-    this.setState({
-      bottomViewAdd: -250,
-      addingPin: false,
-      markerPointerAddValue: this.state.markerPointerAddValue,
-      markerPointerAdd: northPole
-    })
-  }
-
-  closePopUpViewClick() {
-    this.setState({
-      bottomViewClick: -200,
-    })
-  }
-
-  displayPopUpClick() {
-    this.setState({
-      bottomViewClick: 40
-    })
   }
 }
 
