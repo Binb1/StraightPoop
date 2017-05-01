@@ -104,8 +104,6 @@ class UserPage extends Component{
 const styles = StyleSheet.create({
   container: {
     flex: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#FFA860',
   },
   top:{
@@ -114,23 +112,23 @@ const styles = StyleSheet.create({
     marginRight: 290,
   },
   arrow: {
+    marginLeft: 20,
     width: 30,
     height: 30,
   },
   body: {
     flex: 6,
-    justifyContent: 'center',
     alignItems: 'center',
-    width: 320,
-    height: 80,
+    marginRight: 20,
+    marginLeft: 20,
     marginBottom: 20,
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
   },
   bottom: {
     flex: 3,
-    width: 320,
-    height: 50,
+    marginLeft: 20,
+    marginRight: 20,
     marginBottom: 20,
     backgroundColor: 'white',
     borderRadius: 10,
@@ -154,7 +152,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   legendeText:{
-
     marginBottom: 5,
   },
   mail:{
@@ -162,9 +159,10 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   description: {
-    marginBottom: 9,
+    marginBottom: 10,
+    marginTop: 10,
     color: 'black',
-    fontWeight: 'bold',
+    fontWeight: '300',
     fontSize: 25,
   },
   achievements:{
