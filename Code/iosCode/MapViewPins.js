@@ -310,8 +310,8 @@ const styles = new StyleSheet.create({
   },
   profile: {
     position: 'absolute',
-    top: 60,
-    right: 20
+    top: 40,
+    left: 10
   },
   plusButton: {
     width: 70,
