@@ -108,6 +108,8 @@ class MapViewPins extends Component {
 
 
   render() {
+    console.log("markers", markers)
+    console.log("markersaux", markersAux)
     return (
       <View style={styles.container}>
         <MapView
@@ -119,13 +121,12 @@ class MapViewPins extends Component {
           {markers.map(marker => (
             <MapView.Marker
               onPress={() => this.displayPopUpClick()}
-              name={marker.name}
               coordinate={marker.latlng}
               image={marker.image}
               key={marker.key}
               description={''}>
               <MapView.Callout>
-                <PopUpViewClick geofire={this.props.geofire} firebaseApp={this.props.firebaseApp} region={this.state.region} />
+                <PopUpViewClick name={marker.title} geofire={this.props.geofire} firebaseApp={this.props.firebaseApp} region={this.state.region} ratePinUp={this.ratePin.bind(this, marker, 'up')} ratePinDown={this.ratePin.bind(this, marker, 'down')} />
               </MapView.Callout>
             </MapView.Marker>
           ))}
@@ -198,11 +199,68 @@ class MapViewPins extends Component {
       markers = []
       console.log("Items", items)
       for (var i = 0; i < items.length; i++) {
-        markers.push({ key: items[i]._key, latlng: markersAux[items[i]._key].latlng, image: this.rightImage(items[i]), title: items[i].name })
+        markers.push({
+          key: items[i]._key, latlng: markersAux[items[i]._key].latlng, image: this.rightImage(items[i]), title: items[i].name, negative: items[i].negative,
+          positive: items[i].positive, pay: items[i].pay
+        })
         console.log("List of pin", markers)
         called = true
       }
     }
+  }
+
+  //Function called when rating a pin
+  ratePin(marker, choice) {
+    //Changing the up and down ratings
+    console.log(marker.pos)
+    if (choice == 'up') {
+      var pos = marker.positive + 1
+      var neg = marker.negative
+    }
+    else {
+      var pos = marker.positive
+      var neg = marker.negative + 1
+    }
+
+    //Computing the final grade
+    if (pos > ((pos + neg) * 15 / 100)) {
+      var grade = 1
+      var pin = 'green'
+    }
+    else {
+      var grade = 0
+      var pin = 'red'
+    }
+
+    var id = this.props.firebaseApp.database().ref("custom").push({
+      'name': marker.title,
+      'positive': pos,
+      'negative': neg,
+      'grade': grade,
+      'pay': marker.pay,
+      'pinType': pin
+    }).key;
+
+
+    this.props.geofire.set(id, [marker.latlng.latitude, marker.latlng.longitude]).then(function () {
+      console.log("Provided key has been added to GeoFire");
+    }, function (error) {
+      console.log("Error: " + error);
+    });
+
+    //Removing the pins
+    //Deleting the key from the keystorage
+    var el = keyStorage.indexOf(marker.key)
+    if (el > -1) {
+      keyStorage.splice(el, 1);
+    }
+    for (var i = 0; i < markers.length; i++) {
+      if (markers[i].key == marker.key) {
+        markers.splice(i, 1)
+      }
+    }
+    this.props.firebaseApp.database().ref("location").child(marker.key).remove()
+  //  timer.setInterval('deleting', () => this.props.firebaseApp.database().ref("custom").child(marker.key).remove(), 1000);
   }
 
   //How to trick users

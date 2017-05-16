@@ -50,7 +50,7 @@ class PopUpViewAdd extends Component {
         <View style={{ flex: 0.6, alignItems: 'center', justifyContent: 'center', marginBottom: 10 }}>
           <Text
             style={{ color: 'white', fontSize: 20, fontWeight: '400' }}>
-            Starbucks
+            {this.props.name}
          </Text>
         </View>
         <View style={styles.buttonContainer}>
@@ -128,44 +128,14 @@ class PopUpViewAdd extends Component {
       )
       errors = true;
     }
-    //Checking if a name is good
-    /*if (this.state.nameOfThePlace == '') {
-      Alert.alert(
-        'Error',
-        'Enter the name of the place !',
-        [
-          { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-        ],
-        { cancelable: false }
-      )
-      errors = true;
-    }*/
-    //Checking free chosen
-    /*if (this.state.freeChosen == false) {
-      Alert.alert(
-        'Error',
-        'Enter if the restrooms are free or not !',
-        [
-          { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-        ],
-        { cancelable: false }
-      )
-      errors = true;
-    }*/
-    //Sending the item to the database
-    //latitude: 37.78825,
-    //longitude: -122.4324,
-    if (!errors) {
-      this.state.itemsRef.ref("voting").push({
-        '-kasdjkfakhsdfkjhaf': {
-          'nameUser': this.state.email,
-          'namePlace': this.state.nameOfThePlace,
-          'positive': this.state.thumbsChoice == 'up' ? 1 : 0
-        }
-      })
 
+    if (this.state.thumbsChoice == 'up'){
+      this.props.ratePinUp()
     }
-    this.props.closePopUpViewAdd()
+    else{
+      //this.props.ratePinDown()
+    }
+
 
     //Reseting the field
     this.resetField()
