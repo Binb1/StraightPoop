@@ -46,13 +46,13 @@ class PopUpViewAdd extends Component {
 
   render() {
     return (
-      <View style={{ flex: 3 }}>
-        <View style={{flex: 0.6, alignItems: 'center', justifyContent: 'center'}}>
-        <Text
-          style={{color: 'white', fontSize: 35, fontWeight: '400'}}>
-          name
+      <View style={styles.container}>
+        <View style={{ flex: 0.6, alignItems: 'center', justifyContent: 'center', marginBottom: 10 }}>
+          <Text
+            style={{ color: 'white', fontSize: 20, fontWeight: '400' }}>
+            Starbucks
          </Text>
-         </View>
+        </View>
         <View style={styles.buttonContainer}>
           <TouchableHighlight underlayColor='#FFA860' onPress={() => this.thumbsDownPress()}>
             <Image
@@ -68,11 +68,6 @@ class PopUpViewAdd extends Component {
           </TouchableHighlight>
         </View>
         <View style={styles.buttonSendContainer}>
-          <TouchableHighlight style={styles.buttonSendbox} onPress={() => this.props.closePopUpViewAdd()}>
-            <Text style={{ color: '#FFA860', fontSize: 20 }}>
-              Close
-            </Text>
-          </TouchableHighlight>
           <TouchableHighlight style={styles.buttonSendbox} onPress={() => this.sendPin()}>
             <Text style={{ color: '#FFA860', fontSize: 20 }}>
               Send!
@@ -161,11 +156,13 @@ class PopUpViewAdd extends Component {
     //latitude: 37.78825,
     //longitude: -122.4324,
     if (!errors) {
-      this.state.itemsRef.ref("voting").push({'-kasdjkfakhsdfkjhaf':{
-        'nameUser': this.state.email,
-        'namePlace': this.state.nameOfThePlace,
-        'positive': this.state.thumbsChoice == 'up' ? 1 :0
-      }})
+      this.state.itemsRef.ref("voting").push({
+        '-kasdjkfakhsdfkjhaf': {
+          'nameUser': this.state.email,
+          'namePlace': this.state.nameOfThePlace,
+          'positive': this.state.thumbsChoice == 'up' ? 1 : 0
+        }
+      })
 
     }
     this.props.closePopUpViewAdd()
@@ -186,6 +183,10 @@ class PopUpViewAdd extends Component {
 }
 
 const styles = new StyleSheet.create({
+  container: {
+    borderWidth: 3, borderColor: 'white', borderRadius: 10,
+    backgroundColor: '#FFA860', shadowColor: '#999999', shadowOffset: { width: 0, height: 3 }, shadowRadius: 2, shadowOpacity: 0.3
+  },
   textInput: {
     flex: 0.6,
     margin: 5,
@@ -223,16 +224,19 @@ const styles = new StyleSheet.create({
     shadowOpacity: 0.3
   },
   buttonContainer: {
-    flex: 1.2,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    marginRight: 5, 
+    marginLeft: 5
   },
   buttonSendContainer: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    alignItems: 'center'
+    alignItems: 'center',
+        marginRight: 5, 
+    marginLeft: 5
   },
   buttonSendbox: {
     backgroundColor: 'white',

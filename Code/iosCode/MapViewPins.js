@@ -3,9 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, AsyncStorage, Image, Animated
 import MapView from 'react-native-maps';
 import PopUpViewAdd from './PopUpViewAdd.js'
 import PopUpViewClick from './PopUpViewClick.js'
-
 const timer = require('react-native-timer');
-
 
 
 var northPole = {
@@ -88,7 +86,6 @@ class MapViewPins extends Component {
     //Getting user position
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        console.log('In')
         var latitude = position.coords.latitude;
         var longitude = position.coords.longitude;
         this.setState({
@@ -122,10 +119,15 @@ class MapViewPins extends Component {
           {markers.map(marker => (
             <MapView.Marker
               onPress={() => this.displayPopUpClick()}
+              name={marker.name}
               coordinate={marker.latlng}
               image={marker.image}
               key={marker.key}
-            />
+              description={''}>
+              <MapView.Callout>
+                <PopUpViewClick geofire={this.props.geofire} firebaseApp={this.props.firebaseApp} region={this.state.region} />
+              </MapView.Callout>
+            </MapView.Marker>
           ))}
           <MapView.Marker
             coordinate={this.state.userPosition}
@@ -153,12 +155,6 @@ class MapViewPins extends Component {
         }}>
           <PopUpViewAdd bottomViewAdd={this.state.bottomViewAdd} closePopUpViewAdd={this.closePopUpViewAdd.bind(this)} geofire={this.props.geofire} firebaseApp={this.props.firebaseApp} markerPointerAddValue={this.state.markerPointerAdd} />
         </Animated.View>
-        <Animated.View style={{
-          height: 200, borderWidth: 3, borderColor: 'white', borderRadius: 10, position: 'absolute', left: 10, right: 10, bottom: this.state.bottomViewClick,
-          backgroundColor: '#FFA860', shadowColor: '#999999', shadowOffset: { width: 0, height: 3 }, shadowRadius: 2, shadowOpacity: 0.3
-        }}>
-          <PopUpViewClick closePopUpViewAdd={this.closePopUpViewClick.bind(this)} geofire={this.props.geofire} firebaseApp={this.props.firebaseApp} region={this.state.region} />
-        </Animated.View>
       </View>
     )
   }
@@ -181,7 +177,6 @@ class MapViewPins extends Component {
   //Crazy function - Does a big part of the job to display pins
   deepShit() {
     var items = [];
-    console.log(keyStorage.length)
     for (var j = 0; j < keyStorage.length; j++) {
       if (keyStorage[j] != null) {
         this.state.itemsRef.child(keyStorage[j]).on('value', (snap) => {
@@ -198,14 +193,13 @@ class MapViewPins extends Component {
       }
 
     }
-    console.log(items)
-    console.log(globalCounter)
 
     if (items.length > 0) {
       markers = []
+      console.log("Items", items)
       for (var i = 0; i < items.length; i++) {
-        markers.push({ key: items[i]._key, latlng: markersAux[items[i]._key].latlng, image: this.rightImage(items[i]) })
-        console.log(markers)
+        markers.push({ key: items[i]._key, latlng: markersAux[items[i]._key].latlng, image: this.rightImage(items[i]), title: items[i].name })
+        console.log("List of pin", markers)
         called = true
       }
     }
